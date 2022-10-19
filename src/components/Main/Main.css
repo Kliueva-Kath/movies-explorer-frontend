@@ -1,5 +1,4 @@
 .main {
-  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -13,7 +12,8 @@
   color: #ffffff;
   padding-bottom: 23px;
   border-bottom: 1px solid #e5e5e5;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 1140px;
 }
 
 @media screen and (max-width: 500px) {

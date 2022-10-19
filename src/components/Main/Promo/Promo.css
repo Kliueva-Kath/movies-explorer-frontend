@@ -6,7 +6,8 @@
   background: #272727;
   border-radius: 10px;
   min-height: 493px;
-  margin: 20px 40px 0;
+  max-width: 1200px;
+  margin: 20px auto 0;
 }
 
 .promo__header {
@@ -20,6 +21,12 @@
   color: #ffffff;
   margin: 160px auto 151px;
   max-width: 730px;
+}
+
+@media screen and (max-width: 1280px) {
+  .promo {
+    margin: 20px 40px 0;
+  }
 }
 
 @media screen and (max-width: 800px) {

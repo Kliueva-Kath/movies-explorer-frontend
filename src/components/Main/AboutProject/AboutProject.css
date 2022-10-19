@@ -1,5 +1,6 @@
 .about-project {
-  margin: 0 70px;
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 .about-project__header {
@@ -80,6 +81,12 @@
   margin: 0;
 }
 
+@media screen and (max-width: 1280px) {
+  .about-project {
+    margin: 0 70px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .about-project {
     margin: 0 50px;
@@ -93,8 +100,19 @@
     gap: 30px;
   }
 
+  .about-project__card-title {
+    margin: 0 0 22px;
+  }
+
+  .about-project__card-text {
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 319px;
+  }
+
   .about-project__bar {
-    margin: 90px 0;
+    margin: 93px 0 90px;
+    grid-template-columns: 21% 79%;
   }
 }
 
@@ -122,7 +140,7 @@
   }
 
   .about-project__bar {
-    margin: 60px 0 138px;
+    margin: 60px 0 70px;
   }
 
   .about-project__bar-title {

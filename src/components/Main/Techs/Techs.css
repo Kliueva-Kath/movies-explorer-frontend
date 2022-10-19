@@ -1,0 +1,138 @@
+.techs {
+  width: 100%;
+  background: #272727;
+  box-sizing: border-box;
+}
+
+.techs__header {
+  padding: 100px 0 23px;
+}
+
+.techs__title {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 90px auto 26px;
+}
+
+.techs__text {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.43;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.techs__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 100px 0;
+  margin: 0 auto;
+}
+
+.techs__item {
+  width: 90px;
+  height: 60px;
+  background: #303030;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.techs__item-name {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 21px auto 22px;
+}
+
+@media screen and (max-width: 1280px) {
+  .techs {
+    padding: 0 70px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .techs {
+    padding: 0 50px;
+  }
+  .techs__header {
+    padding-top: 90px;
+  }
+  .techs__title {
+    margin: 80px 0 22px;
+  }
+  .techs__text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .techs__list {
+    padding: 83px 0 90px;
+  }
+  .techs__item {
+    width: 84px;
+    height: 57px;
+  }
+  .techs__item-name {
+    font-size: 12px;
+    margin: 21px auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .techs__list {
+    justify-content: start;
+    margin: 0 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs {
+    padding: 0 25px;
+  }
+  .techs__title {
+    font-size: 40px;
+    line-height: 1.35;
+    margin: 75px 0 24px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .techs {
+    padding: 0 18px;
+  }
+  .techs__header {
+    padding: 70px 0 28px;
+  }
+  .techs__title {
+    font-size: 30px;
+    line-height: 1.21;
+    margin: 60px 0 24px;
+  }
+  .techs__text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .techs__list {
+    padding: 50px 0 70px;
+    max-width: 178px;
+  }
+}
