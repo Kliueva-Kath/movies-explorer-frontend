@@ -1,0 +1,52 @@
+.nav-tab {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px;
+}
+
+.nav-tab__item {
+  width: 96px;
+  height: 36px;
+  background: #303030;
+  border-radius: 10px;
+}
+
+.nav-tab__item:hover {
+  opacity: 0.8;
+}
+
+.nav-tab__link {
+  display: block;
+  box-sizing: border-box;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 400px) {
+  .nav-tab {
+    gap: 6px;
+    margin-bottom: 17px;
+  }
+
+  .nav-tab__item {
+    width: 82px;
+    height: 26px;
+  }
+
+  .nav-tab__link {
+    font-size: 10px;
+    line-height: 1.6;
+    padding: 5px 0;
+  }
+}
