@@ -13,25 +13,25 @@ function App() {
   const history = useHistory();
 
   return (
-    <div className="page">
+    <div className='page'>
       <Header />
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Main />
         </Route>
-        <Route path="/movies">
+        <Route path='/movies'>
           <Movies />
         </Route>
-        <Route path="/saved-movies">
+        <Route path='/saved-movies'>
           <SavedMovies />
         </Route>
-        <Route path="/profile">
+        <Route path='/profile'>
           <Profile />
         </Route>
-        <Route path="/signin">
+        <Route path='/signin'>
           <Login history={history} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <Register />
         </Route>
       </Switch>
