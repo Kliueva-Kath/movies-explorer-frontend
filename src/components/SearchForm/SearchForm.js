@@ -1,5 +1,5 @@
 import React from "react";
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
+import FilterCheckbox from "../Movies/FilterCheckbox/FilterCheckbox.js";
 
 function SearchForm() {
   return (

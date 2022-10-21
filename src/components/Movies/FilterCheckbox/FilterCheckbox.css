@@ -1,3 +1,8 @@
+.filter-checkbox {
+  display: flex;
+  gap: 14px;
+}
+
 .filter-checkbox__checkbox {
   position: relative;
   display: inline-block;
@@ -45,5 +50,20 @@
   line-height: 1.38;
   color: #ffffff;
   margin: 0;
-  padding-right: 14px;
+}
+
+@media screen and (max-width: 800px) {
+  .filter-checkbox {
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .filter-checkbox {
+    gap: 13px;
+  }
+  .filter-checkbox__label {
+    font-size: 11px;
+    line-height: 1.64;
+  }
 }
