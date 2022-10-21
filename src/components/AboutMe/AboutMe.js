@@ -1,5 +1,5 @@
 import React from "react";
-import photoPath from "../../../images/Main/about-me__photo.jpg";
+import photoPath from "../../images/Main/about-me__photo.jpg";
 
 function AboutMe() {
   return (

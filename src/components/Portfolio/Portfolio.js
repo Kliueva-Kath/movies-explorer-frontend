@@ -1,5 +1,5 @@
 import React from "react";
-import arrowPath from "../../../images/Main/portfolio__arrow.png";
+import arrowPath from "../../images/Main/portfolio__arrow.png";
 
 function Portfolio() {
   return (
