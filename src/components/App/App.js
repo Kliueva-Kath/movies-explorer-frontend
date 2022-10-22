@@ -1,26 +1,25 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-import Header from "../Header/Header.js";
 import Main from "../Main/Main.js";
-import Footer from "../Footer/Footer.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies.js";
 import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
+import initialMovies from "../../utils/initialMovies.js";
 
 function App() {
   const history = useHistory();
+  const [movies, setMovies] = useState(initialMovies);
 
   return (
     <div className='page'>
-      <Header />
       <Switch>
         <Route exact path='/'>
           <Main />
         </Route>
         <Route path='/movies'>
-          <Movies />
+          <Movies movies={movies} />
         </Route>
         <Route path='/saved-movies'>
           <SavedMovies />
@@ -35,7 +34,6 @@ function App() {
           <Register />
         </Route>
       </Switch>
-      <Footer />
     </div>
   );
 }
