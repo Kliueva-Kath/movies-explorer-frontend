@@ -24,7 +24,11 @@ const initialMovies = [
   },
   { nameRu: "Интерстеллар", duration: 55, image: movie3 },
   { nameRu: "Темный рыцарь", duration: 1, image: movie4 },
-  { nameRu: "Шрэк", duration: 500, image: movie5 },
+  {
+    nameRu: "ШрэкШрэкШрэкШрэкШрэкШрэкШрэкШрэкШрэкШрэкШрэк",
+    duration: 500,
+    image: movie5,
+  },
   { nameRu: "Шрэк", duration: 2000, image: movie6 },
   { nameRu: "Шрэк", duration: 265600, image: movie7 },
   { nameRu: "Шрэк", duration: 20, image: movie8 },

@@ -9,6 +9,12 @@
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .movies {
+    margin: 0 45px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .movies {
     margin: 0 30px;

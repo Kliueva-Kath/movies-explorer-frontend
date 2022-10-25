@@ -41,6 +41,7 @@
   display: block;
   background: #4285f4;
   border-radius: 48px;
+  border: none;
   width: 58px;
   height: 34px;
   font-family: "Inter", "Arial", sans-serif;
@@ -64,20 +65,27 @@
 
 @media screen and (max-width: 800px) {
   .search-form {
-    margin: 0 30px;
+    margin: 0;
     flex-direction: column;
     gap: 37px;
     padding: 60px 0 56px;
+  }
+  .search-form__form {
+    width: 100%;
+    padding-left: 18px;
   }
 }
 
 @media screen and (max-width: 450px) {
   .search-form {
     padding: 60px 0 43px;
+    gap: 44px;
+  }
+  .search-form__form {
+    padding-left: 16px;
   }
   .search-from__input {
     font-size: 11px;
     line-height: 1.64;
-    padding-left: 16px;
   }
 }
