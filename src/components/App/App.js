@@ -22,7 +22,7 @@ function App() {
           <Movies movies={movies} />
         </Route>
         <Route path='/saved-movies'>
-          <SavedMovies />
+          <SavedMovies movies={movies} />
         </Route>
         <Route path='/profile'>
           <Profile />

@@ -48,13 +48,12 @@
   margin: 9px 0 0;
 }
 
-.movie__save-button {
+.movie__button {
   appearance: none;
   box-sizing: border-box;
   display: block;
   background: none;
   border: none;
-  background-image: url("../../images/Movies/movies__save-button.png");
   border-radius: 36px;
   width: 30px;
   height: 30px;
@@ -63,12 +62,24 @@
   padding: 0;
 }
 
+.movie__save-button {
+  background-image: url("../../images/Movies/movies__save-button.png");
+}
+
 .movie__save-button:hover {
   opacity: 0.8;
 }
 
 .movie__save-button_active {
   background-image: url("../../images/Movies/movies__save-button_active.png");
+}
+
+.movie__delete-button {
+  background-image: url("../../images/Movies/movie__delete-button.png");
+}
+
+.movie__delete-button:hover {
+  opacity: 0.8;
 }
 
 .movie__image {
