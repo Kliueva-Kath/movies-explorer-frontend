@@ -1,19 +1,19 @@
 import React from "react";
 import "./SavedMovies.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
+import Header from "../Header/Header.js";
+import Footer from "../Footer/Footer.js";
+import SearchForm from "../SearchForm/SearchForm.js";
+import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
 function SavedMovies({ movies }) {
   return (
-    <section className='movies-list'>
-      <ul className='movies-list__container'>
-        {movies.map((movie) => {
-          return <MoviesCard movie={movie} id={movie._id} />;
-        })}
-      </ul>
-      <button type='button' className='movies-list__show-more'>
-        Ещё
-      </button>
-    </section>
+    <main className='saved-movies'>
+      <Header />
+      <SearchForm />
+      <MoviesCardList movies={movies} />
+      <Footer />
+    </main>
   );
 }
 
