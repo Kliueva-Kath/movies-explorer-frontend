@@ -1,4 +1,5 @@
 import React from "react";
+import "./Movies.css";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";

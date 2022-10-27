@@ -1,4 +1,5 @@
 import React from "react";
+import "./SavedMovies.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
 
 function SavedMovies({ movies }) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
+import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";

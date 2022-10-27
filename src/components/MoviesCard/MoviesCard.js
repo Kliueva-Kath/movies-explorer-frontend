@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
 
 function MoviesCard({ movie }) {

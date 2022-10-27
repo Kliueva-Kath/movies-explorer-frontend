@@ -1,4 +1,5 @@
 import React from "react";
+import "./Main.css";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import Promo from "../Promo/Promo.js";

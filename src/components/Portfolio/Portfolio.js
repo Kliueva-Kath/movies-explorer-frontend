@@ -1,4 +1,5 @@
 import React from "react";
+import "./Portfolio.css";
 import arrowPath from "../../images/Main/portfolio__arrow.png";
 
 function Portfolio() {
