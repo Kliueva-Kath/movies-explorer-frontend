@@ -3,7 +3,7 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 
-function Login({ history }) {
+function Login() {
   return (
     <>
       <AuthForm title='Рады видеть!' buttonText='Войти' name='login'>

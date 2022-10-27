@@ -8,6 +8,7 @@ import SavedMovies from "../SavedMovies/SavedMovies.js";
 import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
+import PageNotFound from "../PageNotFound/PageNotFound.js";
 import initialMovies from "../../utils/initialMovies.js";
 
 function App() {
@@ -32,10 +33,13 @@ function App() {
             <Profile />
           </Route>
           <Route exact path='/signin'>
-            <Login history={history} />
+            <Login />
           </Route>
           <Route exact path='/signup'>
             <Register />
+          </Route>
+          <Route path='*'>
+            <PageNotFound />
           </Route>
         </Switch>
       </div>
