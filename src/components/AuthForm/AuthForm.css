@@ -46,7 +46,14 @@
   line-height: 1.21;
   text-align: center;
   color: #ffffff;
+}
+
+.auth-form__button_type_register {
   margin: 128px auto 16px;
+}
+
+.auth-form__button_type_login {
+  margin: 197px auto 16px;
 }
 
 @media screen and (max-width: 800px) {
@@ -67,7 +74,10 @@
   .auth-form__header {
     margin: 47px 0 80px;
   }
-  .auth-form__button {
+  .auth-form__button_type_register {
     margin: 215px auto 14px;
+  }
+  .auth-form__button_type_login {
+    margin: 285px auto 14px;
   }
 }

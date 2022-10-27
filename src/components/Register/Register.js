@@ -6,7 +6,10 @@ import AuthForm from "../AuthForm/AuthForm.js";
 function Register() {
   return (
     <>
-      <AuthForm title='Добро пожаловать!' buttonText='Зарегистрироваться'>
+      <AuthForm
+        title='Добро пожаловать!'
+        buttonText='Зарегистрироваться'
+        name='register'>
         <label htmlFor='name' className='auth-form__label'>
           Имя
         </label>

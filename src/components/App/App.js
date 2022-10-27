@@ -31,10 +31,10 @@ function App() {
           <Route path='/profile'>
             <Profile />
           </Route>
-          <Route path='/signin'>
+          <Route exact path='/signin'>
             <Login history={history} />
           </Route>
-          <Route path='/signup'>
+          <Route exact path='/signup'>
             <Register />
           </Route>
         </Switch>
