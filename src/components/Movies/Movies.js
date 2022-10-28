@@ -5,10 +5,10 @@ import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
-function Movies({ movies }) {
+function Movies({ movies, isLoggedIn }) {
   return (
     <main className='movies'>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <SearchForm />
       <MoviesCardList movies={movies} />
       <Footer />

@@ -15,6 +15,7 @@ function App() {
   const history = useHistory();
   const [movies, setMovies] = useState(initialMovies);
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoggedIn, setLoggedIn] = useState(true);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -24,10 +25,10 @@ function App() {
             <Main />
           </Route>
           <Route path='/movies'>
-            <Movies movies={movies} />
+            <Movies movies={movies} isLoggedIn={isLoggedIn} />
           </Route>
           <Route path='/saved-movies'>
-            <SavedMovies movies={movies} />
+            <SavedMovies movies={movies} isLoggedIn={isLoggedIn} />
           </Route>
           <Route path='/profile'>
             <Profile />

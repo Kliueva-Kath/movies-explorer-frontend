@@ -78,6 +78,7 @@
   font-size: 13px;
   line-height: 0.92;
   color: #ffffff;
+  vertical-align: middle;
 }
 
 .header__account-icon {

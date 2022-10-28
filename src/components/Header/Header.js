@@ -4,11 +4,13 @@ import logoPath from "../../images/Reused/logo.png";
 import accountPath from "../../images/Header/account-icon.png";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation.js";
+import MobileMenu from "../MobileMenu/MobileMenu.js";
 
-function Header() {
+function Header({ isLoggedIn }) {
   const { pathname } = useLocation();
 
   const [isDesktop, setDesktop] = useState(window.innerWidth > 800);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 800);
@@ -37,6 +39,7 @@ function Header() {
         </header>
       </Route>
       <Route path={["/movies", "/saved-movies"]}>
+        {!isDesktop && <MobileMenu isMenuOpen={isMenuOpen} />}
         <header className='header__logged-in'>
           <Link to='/' className='header__logo-link'>
             <img className='header__logo' src={logoPath} alt='логотип' />

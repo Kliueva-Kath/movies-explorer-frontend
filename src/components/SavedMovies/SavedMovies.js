@@ -1,15 +1,14 @@
 import React from "react";
 import "./SavedMovies.css";
-import MoviesCard from "../MoviesCard/MoviesCard.js";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
-function SavedMovies({ movies }) {
+function SavedMovies({ movies, isLoggedIn }) {
   return (
     <main className='saved-movies'>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <SearchForm />
       <MoviesCardList movies={movies} />
       <Footer />
