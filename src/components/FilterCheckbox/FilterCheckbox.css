@@ -1,7 +1,6 @@
 .filter-checkbox {
   display: flex;
   gap: 14px;
-  width: 167px;
 }
 
 .filter-checkbox__checkbox {

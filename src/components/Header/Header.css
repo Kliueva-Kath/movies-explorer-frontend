@@ -1,13 +1,10 @@
-.header {
+.header__landing {
   max-width: 1140px;
   margin: 0 auto;
-}
-
-.header__landing {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 18px 0 36px;
+  padding: 17px 0 16px;
 }
 
 .header__logo-link:hover {
@@ -60,27 +57,80 @@
   opacity: 0.8;
 }
 
+/* header страниц с фильмами */
+
+.header__logged-in {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1140px;
+  margin: 18px 0 15px;
+  width: 100%;
+}
+
+.header__profile-link {
+  text-decoration: none;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 0.92;
+  color: #ffffff;
+}
+
+.header__account-icon {
+  background: #313131;
+  border-radius: 50px;
+  height: 26px;
+  width: 26px;
+  object-fit: contain;
+  margin-left: 7px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
+.header__profile-link:hover {
+  opacity: 0.8;
+}
+
+.header__menu-burger {
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  background: none;
+  border: none;
+  background-image: url("../../images/Header/menu-burger.png");
+  background-size: contain;
+  height: 44px;
+  width: 44px;
+  padding: 0;
+}
+
+.header__menu-burger:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1280px) {
-  .header {
-    margin: 0 70px;
+  .header__landing {
+    padding: 17px 70px 16px;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .header {
-    margin: 0 30px;
-  }
   .header__landing {
-    margin: 18px 0 34px;
+    padding: 17px 30px 35px;
+  }
+  .header__logged-in {
+    margin: 17px 0 13px;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .header {
-    margin: 0 14px;
-  }
   .header__landing {
-    margin: 18px 0 28px;
+    padding: 17px 14px 29px;
   }
   .header__auth-links {
     gap: 14px;
@@ -96,5 +146,12 @@
     width: 54px;
     height: 26px;
     padding: 5px 12px;
+  }
+  .header__logged-in {
+    margin: 0 4px;
+  }
+  .header__menu-burger {
+    height: 43px;
+    width: 40px;
   }
 }
