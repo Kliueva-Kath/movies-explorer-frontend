@@ -38,8 +38,9 @@
   border-bottom: none;
 }
 
-.portfolio__site {
+.portfolio__link {
   font-family: "Inter", "Arial", sans-serif;
+  text-decoration: none;
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
@@ -74,7 +75,7 @@
     margin-bottom: 90px;
   }
 
-  .portfolio__site {
+  .portfolio__link {
     font-size: 28px;
     line-height: 1.79;
   }
@@ -84,7 +85,7 @@
   .portfolio {
     margin: 0 30px;
   }
-  .portfolio__site {
+  .portfolio__link {
     font-size: 22px;
     line-height: 1.52;
   }
@@ -100,7 +101,7 @@
   .portfolio__list {
     margin: 40px 0 70px;
   }
-  .portfolio__site {
+  .portfolio__link {
     font-size: 18px;
     line-height: 1.56;
   }
@@ -109,6 +110,6 @@
     width: 12px;
     height: 10px;
     padding-right: 4px;
-    padding-bottom: 3px;
+    padding-bottom: 8px;
   }
 }
