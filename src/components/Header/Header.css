@@ -149,10 +149,11 @@
     padding: 5px 12px;
   }
   .header__logged-in {
-    margin: 0 4px;
+    margin: 18px 4px 13px;
   }
   .header__menu-burger {
-    height: 43px;
-    width: 40px;
+    height: 42px;
+    width: 39px;
+    margin-right: 9px;
   }
 }
