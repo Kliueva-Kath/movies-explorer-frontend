@@ -10,6 +10,7 @@
   align-items: center;
   background: #202020;
   z-index: 1;
+  display: none;
 }
 
 .menu__close-button {
@@ -18,7 +19,7 @@
   display: block;
   background: none;
   border: none;
-  background-image: url("../../images/Header/menu-close-icon.png");
+  background-image: url("../../images/Header/menu-close-icon.svg");
   background-size: contain;
   width: 32px;
   height: 32px;
