@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { Switch, Route, Link, useLocation } from "react-router-dom";
-import logoPath from "../../images/Reused/logo.png";
-import accountPath from "../../images/Header/account-icon.png";
+import { Switch, Route, Link } from "react-router-dom";
+import logoPath from "../../images/Reused/logo.svg";
+import accountPath from "../../images/Header/account-icon.svg";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation.js";
 import MobileMenu from "../MobileMenu/MobileMenu.js";
 
 function Header({ isLoggedIn }) {
-  const { pathname } = useLocation();
-
   const [isDesktop, setDesktop] = useState(window.innerWidth > 800);
   const [isMenuOpen, setMenuOpen] = useState(false);
 

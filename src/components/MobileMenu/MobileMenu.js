@@ -1,7 +1,7 @@
 import React from "react";
 import "./MobileMenu.css";
 import { NavLink, Link } from "react-router-dom";
-import accountPath from "../../images/Header/account-icon.png";
+import accountPath from "../../images/Header/account-icon.svg";
 
 function MobileMenu({ isMenuOpen }) {
   return (

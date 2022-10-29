@@ -15,6 +15,7 @@ function Login() {
           value='pochta@yandex.ru'
           name='email'
           className='auth-form__input'
+          placeholder='Email'
           required
         />
         <span className='auth-form__input-error'>Что-то пошло не так...</span>

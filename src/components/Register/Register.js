@@ -17,6 +17,7 @@ function Register() {
           value='Виталий'
           name='name'
           className='auth-form__input'
+          placeholder='Имя'
           required
         />
         <span className='auth-form__input-error'>Что-то пошло не так...</span>
@@ -28,6 +29,7 @@ function Register() {
           value='pochta@yandex.ru'
           name='email'
           className='auth-form__input'
+          placeholder='Email'
           required
         />
         <span className='auth-form__input-error'>Что-то пошло не так...</span>
@@ -39,6 +41,7 @@ function Register() {
           value='password1'
           name='password'
           className='auth-form__input auth-form__input_error'
+          placeholder='Пароль'
           required
         />
         <span className='auth-form__input-error auth-form__input-error_visible'>

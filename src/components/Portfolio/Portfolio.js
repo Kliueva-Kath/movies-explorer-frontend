@@ -1,6 +1,6 @@
 import React from "react";
 import "./Portfolio.css";
-import arrowPath from "../../images/Main/portfolio__arrow.png";
+import arrowPath from "../../images/Main/portfolio__arrow.svg";
 
 function Portfolio() {
   return (
@@ -11,7 +11,9 @@ function Portfolio() {
           <p className='portfolio__site'>Статичный сайт</p>
           <a
             className='portfolio__link'
-            href='https://kliueva-kath.github.io/how-to-learn/'>
+            href='https://kliueva-kath.github.io/how-to-learn/'
+            target='_blank'
+            rel='noopener noreferrer'>
             <img
               className='portfolio__arrow'
               alt='Перейти на сайт'
@@ -23,7 +25,9 @@ function Portfolio() {
           <p className='portfolio__site'>Адаптивный сайт</p>
           <a
             className='portfolio__link'
-            href='https://kliueva-kath.github.io/russian-travel/'>
+            href='https://kliueva-kath.github.io/russian-travel/'
+            target='_blank'
+            rel='noopener noreferrer'>
             <img
               className='portfolio__arrow'
               alt='Перейти на сайт'
@@ -35,7 +39,9 @@ function Portfolio() {
           <p className='portfolio__site'>Одностраничное приложение</p>
           <a
             className='portfolio__link'
-            href='https://mesto.kliueva.nomoredomains.club/sign-in'>
+            href='https://mesto.kliueva.nomoredomains.club/sign-in'
+            target='_blank'
+            rel='noopener noreferrer'>
             <img
               className='portfolio__arrow'
               alt='Перейти на сайт'

@@ -1,7 +1,7 @@
 import React from "react";
 import "./AuthForm.css";
 import { Link } from "react-router-dom";
-import logoPath from "../../images/Reused/logo.png";
+import logoPath from "../../images/Reused/logo.svg";
 
 function AuthForm({ title, children, buttonText, name }) {
   return (

@@ -63,7 +63,7 @@
 }
 
 .movie__save-button {
-  background-image: url("../../images/Movies/movies__save-button.png");
+  background-image: url("../../images/Movies/movies__save-button.svg");
 }
 
 .movie__save-button:hover {
@@ -72,11 +72,11 @@
 }
 
 .movie__save-button_active {
-  background-image: url("../../images/Movies/movies__save-button_active.png");
+  background-image: url("../../images/Movies/movies__save-button_active.svg");
 }
 
 .movie__delete-button {
-  background-image: url("../../images/Movies/movie__delete-button.png");
+  background-image: url("../../images/Movies/movie__delete-button.svg");
 }
 
 .movie__delete-button:hover {
