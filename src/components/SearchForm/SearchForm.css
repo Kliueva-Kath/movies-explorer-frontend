@@ -35,6 +35,10 @@
 .search-from__input:focus {
   outline: none;
 }
+
+.search-form__form:focus-within {
+  border: 1px solid #4285f4;
+}
 .search-form__button {
   appearance: none;
   box-sizing: border-box;
