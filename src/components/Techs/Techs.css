@@ -118,9 +118,11 @@
 @media screen and (max-width: 450px) {
   .techs {
     padding: 0 18px;
+    background: transparent;
   }
   .techs__header {
     padding: 70px 0 28px;
+    border-bottom: 1px solid #000;
   }
   .techs__title {
     font-size: 30px;
@@ -133,6 +135,6 @@
   }
   .techs__list {
     padding: 50px 0 70px;
-    max-width: 178px;
+    min-width: 178px;
   }
 }
