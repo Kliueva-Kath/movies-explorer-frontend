@@ -1,5 +1,5 @@
 .menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 520px;
@@ -10,7 +10,6 @@
   align-items: center;
   background: #202020;
   z-index: 1;
-  display: none;
 }
 
 .menu__close-button {
