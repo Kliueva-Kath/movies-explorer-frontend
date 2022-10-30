@@ -1,0 +1,25 @@
+.main {
+  margin: 0 auto;
+}
+
+.main__header {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.23;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #e5e5e5;
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+@media screen and (max-width: 500px) {
+  .main__header {
+    font-size: 18px;
+    line-height: 1.22;
+    padding-bottom: 28px;
+  }
+}

@@ -1,0 +1,26 @@
+.header__nav-bar {
+  display: flex;
+  gap: 16px;
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 106px);
+}
+
+.header__nav-link {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.38;
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0;
+}
+
+.header__nav-link_active {
+  font-weight: 500;
+}
+
+.header__nav-link:hover {
+  opacity: 0.8;
+}

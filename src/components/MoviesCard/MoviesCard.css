@@ -1,0 +1,103 @@
+.movie {
+  background-color: #222222;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie__top-panel {
+  padding-left: 16px;
+  padding-right: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  gap: 20px;
+}
+
+.movie__info {
+  width: 278px;
+}
+
+.movie__name {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.movie__duration {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+  display: flex;
+  align-items: center;
+  color: #8b8b8b;
+  margin: 9px 0 0;
+}
+
+.movie__button {
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  background: none;
+  border: none;
+  border-radius: 36px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+
+.movie__save-button {
+  background-image: url("../../images/Movies/movies__save-button.svg");
+}
+
+.movie__save-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.movie__save-button_active {
+  background-image: url("../../images/Movies/movies__save-button_active.svg");
+}
+
+.movie__delete-button {
+  background-image: url("../../images/Movies/movie__delete-button.svg");
+}
+
+.movie__delete-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.movie__image {
+  object-fit: contain;
+  width: 100%;
+  padding-top: 14px;
+}
+
+@media screen and (max-width: 1270px) {
+  .movie__info {
+    width: 253px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .movie__info {
+    width: 214px;
+  }
+}
