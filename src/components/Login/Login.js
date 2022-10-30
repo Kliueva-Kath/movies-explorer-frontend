@@ -5,7 +5,7 @@ import AuthForm from "../AuthForm/AuthForm.js";
 
 function Login() {
   return (
-    <>
+    <main className='login'>
       <AuthForm title='Рады видеть!' buttonText='Войти' name='login'>
         <label htmlFor='email' className='auth-form__label'>
           E-mail
@@ -37,7 +37,7 @@ function Login() {
           Регистрация
         </Link>
       </p>
-    </>
+    </main>
   );
 }
 

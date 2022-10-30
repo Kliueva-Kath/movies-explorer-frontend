@@ -5,7 +5,7 @@ import AuthForm from "../AuthForm/AuthForm.js";
 
 function Register() {
   return (
-    <>
+    <main className='register'>
       <AuthForm
         title='Добро пожаловать!'
         buttonText='Зарегистрироваться'
@@ -54,7 +54,7 @@ function Register() {
           Войти
         </Link>
       </p>
-    </>
+    </main>
   );
 }
 

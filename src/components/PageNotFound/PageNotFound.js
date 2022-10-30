@@ -6,7 +6,7 @@ import "./PageNotFound.css";
 function PageNotFound() {
   const history = useHistory();
   return (
-    <section className='error-page'>
+    <main className='error-page'>
       <h2 className='error-page__header'>404</h2>
       <p className='error-page__desc'>Страница не найдена</p>
       <button
@@ -15,7 +15,7 @@ function PageNotFound() {
         onClick={() => history.goBack()}>
         Назад
       </button>
-    </section>
+    </main>
   );
 }
 
