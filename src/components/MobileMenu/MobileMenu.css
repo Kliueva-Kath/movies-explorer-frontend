@@ -13,6 +13,10 @@
   display: none;
 }
 
+.menu_open {
+  display: flex;
+}
+
 .menu__close-button {
   appearance: none;
   box-sizing: border-box;

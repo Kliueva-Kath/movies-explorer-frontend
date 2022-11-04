@@ -6,6 +6,8 @@ import "./Header.css";
 import Navigation from "../Navigation/Navigation.js";
 import MobileMenu from "../MobileMenu/MobileMenu.js";
 
+//TODO исправить header в состоянии loggedIn
+
 function Header({ isLoggedIn }) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 800);
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -18,6 +20,10 @@ function Header({ isLoggedIn }) {
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   });
+
+  function toggleMenu() {
+    setMenuOpen(!isMenuOpen);
+  }
 
   return (
     <Switch>
@@ -37,7 +43,9 @@ function Header({ isLoggedIn }) {
         </header>
       </Route>
       <Route path={["/movies", "/saved-movies"]}>
-        {!isDesktop && <MobileMenu isMenuOpen={isMenuOpen} />}
+        {!isDesktop && (
+          <MobileMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        )}
         <header className='header__logged-in'>
           <Link to='/' className='header__logo-link'>
             <img className='header__logo' src={logoPath} alt='логотип' />
@@ -58,7 +66,9 @@ function Header({ isLoggedIn }) {
                 </>
               );
             } else {
-              return <button className='header__menu-burger' />;
+              return (
+                <button className='header__menu-burger' onClick={toggleMenu} />
+              );
             }
           })()}
         </header>

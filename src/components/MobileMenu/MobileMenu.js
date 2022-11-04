@@ -1,12 +1,25 @@
-import React from "react";
+import { useEffect } from "react";
 import "./MobileMenu.css";
 import { NavLink, Link } from "react-router-dom";
 import accountPath from "../../images/Header/account-icon.svg";
 
-function MobileMenu({ isMenuOpen }) {
+function MobileMenu({ isMenuOpen, toggleMenu }) {
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("keydown", handleEscClose);
+    }
+    return () => document.removeEventListener("keydown", handleEscClose);
+  }, [isMenuOpen]);
+
+  function handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      toggleMenu();
+    }
+  }
+
   return (
-    <div className='menu'>
-      <button className='menu__close-button' />
+    <div className={`menu ${isMenuOpen && "menu_open"}`}>
+      <button className='menu__close-button' onClick={toggleMenu} />
       <nav className='menu__nav-bar'>
         <NavLink
           exact

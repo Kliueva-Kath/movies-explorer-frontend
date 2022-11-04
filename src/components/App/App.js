@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
+import MoviesApi from "../../utils/MoviesApi.js";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies.js";
@@ -13,9 +15,23 @@ import initialMovies from "../../utils/initialMovies.js";
 
 function App() {
   const history = useHistory();
-  const [movies, setMovies] = useState(initialMovies);
+  const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setLoggedIn] = useState(true);
+  const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    MoviesApi.getMovies()
+      .then((movies) => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  //TODO: настроить блок .catch;
+
+  console.log(localStorage.getItem("movies"));
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -24,21 +40,30 @@ function App() {
           <Route exact path='/'>
             <Main />
           </Route>
-          <Route path='/movies'>
-            <Movies movies={movies} isLoggedIn={isLoggedIn} />
-          </Route>
-          <Route path='/saved-movies'>
-            <SavedMovies movies={movies} isLoggedIn={isLoggedIn} />
-          </Route>
-          <Route path='/profile'>
-            <Profile />
-          </Route>
           <Route exact path='/signin'>
             <Login />
           </Route>
           <Route exact path='/signup'>
             <Register />
           </Route>
+          <ProtectedRoute
+            path='/movies'
+            keyword={keyword}
+            component={Movies}
+            movies={movies}
+            isLoggedIn={isLoggedIn}
+          />
+          <ProtectedRoute
+            path='/saved-movies'
+            component={SavedMovies}
+            movies={movies}
+            isLoggedIn={isLoggedIn}
+          />
+          <ProtectedRoute
+            path='/profile'
+            component={Profile}
+            isLoggedIn={isLoggedIn}
+          />
           <Route path='*'>
             <PageNotFound />
           </Route>
