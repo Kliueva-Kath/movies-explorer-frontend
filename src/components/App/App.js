@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
-import MoviesApi from "../../utils/MoviesApi.js";
+import moviesApi from "../../utils/MoviesApi.js";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies.js";
@@ -21,7 +21,8 @@ function App() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    MoviesApi.getMovies()
+    moviesApi
+      .getMovies()
       .then((movies) => {
         localStorage.setItem("movies", JSON.stringify(movies));
       })
