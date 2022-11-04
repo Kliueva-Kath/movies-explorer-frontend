@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 17px 0 16px;
+  position: relative;
 }
 
 .header__logo-link:hover {
@@ -68,32 +69,6 @@
   max-width: 1140px;
   margin: 18px 0 15px;
   width: 100%;
-}
-
-.header__profile-link {
-  text-decoration: none;
-  font-family: "Inter", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 0.92;
-  color: #ffffff;
-  vertical-align: middle;
-}
-
-.header__account-icon {
-  background: #313131;
-  border-radius: 50px;
-  height: 26px;
-  width: 26px;
-  object-fit: contain;
-  margin-left: 7px;
-  margin-right: 3px;
-  vertical-align: middle;
-}
-
-.header__profile-link:hover {
-  opacity: 0.8;
 }
 
 .header__menu-burger {

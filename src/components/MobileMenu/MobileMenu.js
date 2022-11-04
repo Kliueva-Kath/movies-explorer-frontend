@@ -17,38 +17,48 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
     }
   }
 
+  function handleCloseByOverlayClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      toggleMenu();
+    }
+  }
+
   return (
-    <div className={`menu ${isMenuOpen && "menu_open"}`}>
-      <button className='menu__close-button' onClick={toggleMenu} />
-      <nav className='menu__nav-bar'>
-        <NavLink
-          exact
-          to='/'
-          activeClassName='menu__nav-link_active'
-          className='menu__nav-link'>
-          Главная
-        </NavLink>
-        <NavLink
-          to='/movies'
-          activeClassName='menu__nav-link_active'
-          className='menu__nav-link'>
-          Фильмы
-        </NavLink>
-        <NavLink
-          to='/saved-movies'
-          activeClassName='menu__nav-link_active'
-          className='menu__nav-link'>
-          Сохранённые фильмы
-        </NavLink>
-      </nav>
-      <Link to='/profile' className='menu__profile-link'>
-        Аккаунт
-        <img
-          className='menu__account-icon'
-          src={accountPath}
-          alt='иконка аккаунта'
-        />
-      </Link>
+    <div
+      className={`menu ${isMenuOpen && "menu_open"}`}
+      onClick={handleCloseByOverlayClick}>
+      <div className='menu__popup'>
+        <button className='menu__close-button' onClick={toggleMenu} />
+        <nav className='menu__nav-bar'>
+          <NavLink
+            exact
+            to='/'
+            activeClassName='menu__nav-link_active'
+            className='menu__nav-link'>
+            Главная
+          </NavLink>
+          <NavLink
+            to='/movies'
+            activeClassName='menu__nav-link_active'
+            className='menu__nav-link'>
+            Фильмы
+          </NavLink>
+          <NavLink
+            to='/saved-movies'
+            activeClassName='menu__nav-link_active'
+            className='menu__nav-link'>
+            Сохранённые фильмы
+          </NavLink>
+        </nav>
+        <Link to='/profile' className='menu__profile-link'>
+          Аккаунт
+          <img
+            className='menu__account-icon'
+            src={accountPath}
+            alt='иконка аккаунта'
+          />
+        </Link>
+      </div>
     </div>
   );
 }

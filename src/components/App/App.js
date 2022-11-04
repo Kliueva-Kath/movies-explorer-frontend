@@ -39,7 +39,7 @@ function App() {
       <div className='page'>
         <Switch>
           <Route exact path='/'>
-            <Main />
+            <Main isLoggedIn={isLoggedIn} />
           </Route>
           <Route exact path='/signin'>
             <Login />
