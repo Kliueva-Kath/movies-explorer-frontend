@@ -12,14 +12,15 @@ class MoviesApi {
   }
 
   getMovies() {
-    return fetch(this._url, {
+    return fetch(`${this._url}/beatfilm-movies`, {
       method: "GET",
+      headers: this._headers,
     }).then(this._checkResponse);
   }
 }
 
 const moviesApi = new MoviesApi({
-  baseUrl: "https://api.nomoreparties.co/beatfilm-movies",
+  baseUrl: "https://api.nomoreparties.co",
   headers: {
     "content-type": "application/json",
   },

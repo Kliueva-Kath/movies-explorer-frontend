@@ -3,16 +3,18 @@ import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function SearchForm({ keyword }) {
+function SearchForm({ keyword, handleSearch }) {
   const { values, handleChange, setValues } = useFormWithValidation({});
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    handleSearch(values.keyword);
+    console.log("сабмит формы поиска фильмов");
   }
 
   return (
     <section className='search-form'>
-      <form className='search-form__form'>
+      <form className='search-form__form' onSubmit={handleSubmit}>
         <input
           className='search-from__input'
           placeholder='Фильм'

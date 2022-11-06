@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
-import moviesApi from "../../utils/MoviesApi.js";
+
 import mainApi from "../../utils/MainApi.js";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
@@ -16,27 +16,13 @@ import initialMovies from "../../utils/initialMovies.js";
 
 function App() {
   const history = useHistory();
-  const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [savedMovies, setSavedMovies] = useState([]);
   /*   const [isLoggedIn, setLoggedIn] = useState(
     Boolean(localStorage.getItem("token"))
   ); */
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
-
-  const [keyword, setKeyword] = useState("");
-
-  useEffect(() => {
-    moviesApi
-      .getMovies()
-      .then((movies) => {
-        localStorage.setItem("movies", JSON.stringify(movies));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-  //TODO: настроить блок .catch;
 
   function handleLogin(data) {
     mainApi
@@ -91,7 +77,7 @@ function App() {
   function handleLogout() {
     localStorage.clear();
     setLoggedIn(false);
-    history.push("/signin");
+    history.push("/");
     console.log("logout clicked");
   }
 
@@ -130,16 +116,14 @@ function App() {
           </Route>
           <ProtectedRoute
             path='/movies'
-            keyword={keyword}
             component={Movies}
-            movies={movies}
             isLoggedIn={isLoggedIn}
           />
           <ProtectedRoute
             path='/saved-movies'
             component={SavedMovies}
-            movies={movies}
             isLoggedIn={isLoggedIn}
+            savedMovies={savedMovies}
           />
           <ProtectedRoute
             path='/profile'
