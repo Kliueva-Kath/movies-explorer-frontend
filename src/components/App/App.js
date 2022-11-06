@@ -4,6 +4,7 @@ import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import moviesApi from "../../utils/MoviesApi.js";
+import mainApi from "../../utils/MainApi.js";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies.js";
@@ -17,8 +18,24 @@ function App() {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(
+    Boolean(localStorage.getItem("token"))
+  );
   const [keyword, setKeyword] = useState("");
+
+  // получаем и устанавливаем информацию о пользователе с сервера
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     moviesApi
@@ -32,7 +49,60 @@ function App() {
   });
   //TODO: настроить блок .catch;
 
-  console.log(localStorage.getItem("movies"));
+  function handleLogin(data) {
+    mainApi
+      .authorize(data)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setLoggedIn(true);
+          history.push("/movies");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  console.log(localStorage.getItem("token"));
+  console.log(isLoggedIn);
+  console.log(currentUser);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      mainApi
+        .checkToken()
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            history.push("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  function handleRegistration(data) {
+    mainApi
+      .register(data)
+      .then((res) => {
+        history.push("/signin");
+      })
+      .catch((err) => {
+        /*         setRegistationSuccessful(false);
+        setInfoTooltipPopupOpen(true); */
+      });
+  }
+  //TODO настроить блок .catch
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    history.push("/signin");
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -41,11 +111,11 @@ function App() {
           <Route exact path='/'>
             <Main isLoggedIn={isLoggedIn} />
           </Route>
-          <Route exact path='/signin'>
-            <Login />
+          <Route path='/signin'>
+            <Login onLogin={handleLogin} />
           </Route>
-          <Route exact path='/signup'>
-            <Register />
+          <Route path='/signup'>
+            <Register onRegistration={handleRegistration} />
           </Route>
           <ProtectedRoute
             path='/movies'
@@ -64,6 +134,7 @@ function App() {
             path='/profile'
             component={Profile}
             isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
           />
           <Route path='*'>
             <PageNotFound />

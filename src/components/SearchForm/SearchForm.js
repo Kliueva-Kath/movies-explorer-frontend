@@ -1,16 +1,14 @@
 import { useEffect } from "react";
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
-import useForm from "../../hooks/useForm.js";
+import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
 function SearchForm({ keyword }) {
-  const { values, handleChange, setValues } = useForm({});
+  const { values, handleChange, setValues } = useFormWithValidation({});
 
   function handleSubmit(evt) {
     evt.preventDefault();
   }
-
-  console.log(values.keyword);
 
   return (
     <section className='search-form'>

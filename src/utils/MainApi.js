@@ -30,7 +30,6 @@ class MainApi {
       headers: this._headers,
       credentials: "include",
       body: JSON.stringify({
-        name: data.name,
         email: data.email,
         password: data.password,
       }),
@@ -104,9 +103,10 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: "https://api.movies.kliueva.nomoredomains.icu/",
+  baseUrl: "https://api.movies.kliueva.nomoredomains.icu",
   headers: {
     "content-type": "application/json",
+    authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 

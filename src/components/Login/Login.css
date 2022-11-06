@@ -30,7 +30,6 @@
   line-height: 12px;
   color: #ee3465;
   padding: 6px 0;
-  visibility: hidden;
 }
 
 .auth-form__input_error {
@@ -40,10 +39,6 @@
 .auth-form__input:focus {
   outline: none;
   border-bottom: 1px solid #4285f4;
-}
-
-.auth-form__input-error_visible {
-  visibility: visible;
 }
 
 .auth-form__redirect {
