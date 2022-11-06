@@ -18,24 +18,13 @@ function App() {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setLoggedIn] = useState(
+  /*   const [isLoggedIn, setLoggedIn] = useState(
     Boolean(localStorage.getItem("token"))
-  );
-  const [keyword, setKeyword] = useState("");
+  ); */
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
 
-  // получаем и устанавливаем информацию о пользователе с сервера
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi
-        .getUserInfo()
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [isLoggedIn]);
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     moviesApi
@@ -54,13 +43,14 @@ function App() {
       .authorize(data)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("token", res.token);
           setLoggedIn(true);
           history.push("/movies");
+          localStorage.setItem("token", res.token);
         }
       })
       .catch((err) => {
         console.log(err);
+        setSubmitSuccessful(false);
       });
   }
 
@@ -76,11 +66,12 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+            setCurrentUser(res);
             history.push("/");
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "в проверке токена");
         });
     }
   }, []);
@@ -92,17 +83,31 @@ function App() {
         history.push("/signin");
       })
       .catch((err) => {
-        /*         setRegistationSuccessful(false);
-        setInfoTooltipPopupOpen(true); */
+        setSubmitSuccessful(false);
       });
   }
   //TODO настроить блок .catch
 
   function handleLogout() {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setLoggedIn(false);
     history.push("/signin");
+    console.log("logout clicked");
   }
+
+  // получаем и устанавливаем информацию о пользователе с сервера
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -112,10 +117,16 @@ function App() {
             <Main isLoggedIn={isLoggedIn} />
           </Route>
           <Route path='/signin'>
-            <Login onLogin={handleLogin} />
+            <Login
+              onLogin={handleLogin}
+              isSubmitSuccessful={isSubmitSuccessful}
+            />
           </Route>
           <Route path='/signup'>
-            <Register onRegistration={handleRegistration} />
+            <Register
+              onRegistration={handleRegistration}
+              isSubmitSuccessful={isSubmitSuccessful}
+            />
           </Route>
           <ProtectedRoute
             path='/movies'

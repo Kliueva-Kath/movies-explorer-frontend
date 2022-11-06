@@ -55,7 +55,8 @@ function Profile({ isLoggedIn, onLogout }) {
             </button>
             <button
               type='button'
-              className='profile__exit-button profile__button'>
+              className='profile__exit-button profile__button'
+              onClick={onLogout}>
               Выйти из аккаунта
             </button>
           </>

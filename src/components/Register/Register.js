@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function Register({ onRegistration }) {
+function Register({ onRegistration, isSubmitSuccessful }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
 
@@ -13,6 +13,7 @@ function Register({ onRegistration }) {
     onRegistration(values);
     console.log("запрос на регистрацию");
     console.log(values);
+    resetForm();
   }
 
   return (
@@ -20,9 +21,11 @@ function Register({ onRegistration }) {
       <AuthForm
         title='Добро пожаловать!'
         buttonText='Зарегистрироваться'
+        submitErrorText='Пользователь с таким email уже существует.'
         name='register'
         onSubmit={handleSubmit}
-        isValid={isValid}>
+        isValid={isValid}
+        isSubmitSuccessful={isSubmitSuccessful}>
         <label htmlFor='name' className='auth-form__label'>
           Имя
         </label>
@@ -58,6 +61,8 @@ function Register({ onRegistration }) {
         <input
           type='password'
           name='password'
+          minLength='6'
+          maxLength='10'
           value={values.password || ""}
           className={`auth-form__input ${
             errors.password && "auth-form__input_error"
