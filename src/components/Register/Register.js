@@ -36,6 +36,8 @@ function Register({ onRegistration, isSubmitSuccessful }) {
             errors.name && "auth-form__input_error"
           }`}
           placeholder='Имя'
+          minLength='2'
+          maxLength='30'
           onChange={handleChange}
           required
         />
@@ -61,8 +63,7 @@ function Register({ onRegistration, isSubmitSuccessful }) {
         <input
           type='password'
           name='password'
-          minLength='6'
-          maxLength='10'
+          minLength='8'
           value={values.password || ""}
           className={`auth-form__input ${
             errors.password && "auth-form__input_error"

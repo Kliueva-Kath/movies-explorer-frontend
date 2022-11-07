@@ -1,14 +1,39 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./Profile.css";
 import Header from "../Header/Header.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function Profile({ isLoggedIn, onLogout }) {
+function Profile({
+  isLoggedIn,
+  onLogout,
+  onSubmit,
+  isSubmitSuccessful,
+  submitEditFormError,
+}) {
+  const { values, setValues, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation({ name: "", email: "" });
   const [isEditing, setEditing] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
+  useEffect(() => {
+    setValues({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [currentUser]);
+
   function handleEditButtonClick() {
     setEditing(true);
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit(values);
+    if (isSubmitSuccessful) {
+      setEditing(false);
+    }
+    resetForm({ name: currentUser.name, email: currentUser.email }, {}, false);
   }
 
   return (
@@ -16,31 +41,52 @@ function Profile({ isLoggedIn, onLogout }) {
       <Header isLoggedIn={isLoggedIn} />
       <div className='profile__content'>
         <h1 className='profile__header'>Привет, {currentUser.name}!</h1>
-        <form className='profile__form'>
+        <form className='profile__form' onSubmit={handleSubmit}>
           <div className='profile__input-container profile__name'>
+            <span className='profile__input-error profile__input-error_type_name'>
+              {errors.name}
+            </span>
             <p className='profile__input-name'>Имя</p>
             <input
               className='profile__input'
               name='name'
               placeholder='имя'
-              disabled
-              value={currentUser.name}
+              disabled={!isEditing && "disabled"}
+              onChange={handleChange}
+              value={values.name || ""}
+              minLength='2'
+              maxLength='30'
+              required
             />
           </div>
           <div className='profile__input-container profile__email'>
+            <span className='profile__input-error profile__input-error_type_email'>
+              {errors.email}
+            </span>
             <p className='profile__input-name'>E-mail</p>
             <input
               className='profile__input'
               type='email'
               name='email'
               placeholder='email'
-              disabled
-              value={currentUser.email}
+              disabled={!isEditing && "disabled"}
+              value={values.email || ""}
+              onChange={handleChange}
               required
             />
           </div>
+          {!isSubmitSuccessful && (
+            <span className='auth-form__submit-error'>
+              {submitEditFormError}
+            </span>
+          )}
           {isEditing && (
-            <button className='profile__save-button' type='submit'>
+            <button
+              className={`profile__save-button ${
+                !isValid && "`profile__save-button_disabled"
+              }`}
+              type='submit'
+              disabled={!isValid}>
               Сохранить
             </button>
           )}

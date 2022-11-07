@@ -44,8 +44,7 @@ function Login({ onLogin, isSubmitSuccessful }) {
         <input
           type='password'
           name='password'
-          minLength='6'
-          maxLength='10'
+          minLength='8'
           value={values.password || ""}
           className={`auth-form__input ${
             errors.password && "auth-form__input_error"

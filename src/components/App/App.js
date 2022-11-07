@@ -23,6 +23,7 @@ function App() {
   ); */
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
+  const [submitEditFormError, setSubmitEditFormError] = useState("");
 
   function handleLogin(data) {
     mainApi
@@ -40,10 +41,6 @@ function App() {
       });
   }
 
-  console.log(localStorage.getItem("token"));
-  console.log(isLoggedIn);
-  console.log(currentUser);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -54,6 +51,7 @@ function App() {
             setLoggedIn(true);
             setCurrentUser(res);
             history.push("/");
+            console.log("token check happened");
           }
         })
         .catch((err) => {
@@ -79,6 +77,21 @@ function App() {
     setLoggedIn(false);
     history.push("/");
     console.log("logout clicked");
+  }
+
+  function handleUserUpdate(values) {
+    mainApi
+      .editUserInfo(values)
+      .then((res) => {
+        setCurrentUser(res);
+        setSubmitSuccessful(true);
+        setSubmitEditFormError("");
+      })
+      .catch((err) => {
+        console.log(err);
+        setSubmitSuccessful(false);
+        setSubmitEditFormError(err);
+      });
   }
 
   // получаем и устанавливаем информацию о пользователе с сервера
@@ -130,6 +143,9 @@ function App() {
             component={Profile}
             isLoggedIn={isLoggedIn}
             onLogout={handleLogout}
+            onSubmit={handleUserUpdate}
+            isSubmitSuccessful={isSubmitSuccessful}
+            submitEditFormError={submitEditFormError}
           />
           <Route path='*'>
             <PageNotFound />

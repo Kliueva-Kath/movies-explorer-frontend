@@ -14,6 +14,7 @@ function Movies({ isLoggedIn }) {
   const [keyword, setKeyword] = useState("");
   const [searchError, setSearchError] = useState("");
   const [isShortMovie, setShortMovie] = useState(false);
+  const [isCheckboxOn, setCheckboxOn] = useState(false);
 
   useEffect(() => {
     moviesApi
@@ -29,7 +30,7 @@ function Movies({ isLoggedIn }) {
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
         );
       });
-  }, []);
+  }, [keyword]);
   //TODO: настроить блок .catch;
 
   useEffect(() => {
@@ -64,10 +65,18 @@ function Movies({ isLoggedIn }) {
     }
   }
 
+  function toggleCheckbox() {
+    setCheckboxOn(!isCheckboxOn);
+  }
+
   return (
     <main className='movies'>
       <Header isLoggedIn={isLoggedIn} />
-      <SearchForm keyword={keyword} handleSearch={handleSearch} />
+      <SearchForm
+        keyword={keyword}
+        handleSearch={handleSearch}
+        toggleCheckbox={toggleCheckbox}
+      />
       {!searchError && <MoviesCardList movies={foundMovies} />}
       {searchError && <p className='movies__empty-search'>{searchError}</p>}
       <Footer />

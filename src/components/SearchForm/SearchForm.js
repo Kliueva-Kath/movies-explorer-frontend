@@ -3,7 +3,7 @@ import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function SearchForm({ keyword, handleSearch }) {
+function SearchForm({ keyword, handleSearch, toggleCheckbox }) {
   const { values, handleChange, setValues } = useFormWithValidation({});
 
   function handleSubmit(evt) {
@@ -27,7 +27,7 @@ function SearchForm({ keyword, handleSearch }) {
           Найти
         </button>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox toggleCheckbox={toggleCheckbox} />
     </section>
   );
 }
