@@ -9,10 +9,17 @@ function Profile({
   onLogout,
   onSubmit,
   isSubmitSuccessful,
-  submitEditFormError,
+  submitEditFormStatus,
 }) {
-  const { values, setValues, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation({ name: "", email: "" });
+  const {
+    values,
+    setValues,
+    handleChange,
+    errors,
+    isValid,
+    setValid,
+    resetForm,
+  } = useFormWithValidation({ name: "", email: "" });
   const [isEditing, setEditing] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
@@ -25,15 +32,14 @@ function Profile({
 
   function handleEditButtonClick() {
     setEditing(true);
+    setValid(true);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(values);
-    if (isSubmitSuccessful) {
-      setEditing(false);
-    }
-    resetForm({ name: currentUser.name, email: currentUser.email }, {}, false);
+    setEditing(false);
+    resetForm({ name: currentUser.name, email: currentUser.email }, {}, true);
   }
 
   return (
@@ -75,15 +81,16 @@ function Profile({
               required
             />
           </div>
-          {!isSubmitSuccessful && (
-            <span className='auth-form__submit-error'>
-              {submitEditFormError}
-            </span>
-          )}
+          <span
+            className={`${!isSubmitSuccessful && "profile__submit-error"} ${
+              isSubmitSuccessful && "profile__submit-success"
+            }`}>
+            {submitEditFormStatus}
+          </span>
           {isEditing && (
             <button
               className={`profile__save-button ${
-                !isValid && "`profile__save-button_disabled"
+                !isValid && "profile__save-button_disabled"
               }`}
               type='submit'
               disabled={!isValid}>

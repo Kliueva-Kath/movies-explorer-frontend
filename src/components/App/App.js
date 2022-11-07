@@ -23,7 +23,7 @@ function App() {
   ); */
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
-  const [submitEditFormError, setSubmitEditFormError] = useState("");
+  const [submitEditFormStatus, setSubmitEditFormStatus] = useState("");
 
   function handleLogin(data) {
     mainApi
@@ -85,12 +85,16 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setSubmitSuccessful(true);
-        setSubmitEditFormError("");
+        setSubmitEditFormStatus("Данные пользователя успешно изменены.");
       })
       .catch((err) => {
         console.log(err);
         setSubmitSuccessful(false);
-        setSubmitEditFormError(err);
+        if (err === "Ошибка: 409") {
+          setSubmitEditFormStatus("Пользователь с таким email уже существует.");
+        } else {
+          setSubmitEditFormStatus("При обновлении профиля произошла ошибка.");
+        }
       });
   }
 
@@ -145,7 +149,7 @@ function App() {
             onLogout={handleLogout}
             onSubmit={handleUserUpdate}
             isSubmitSuccessful={isSubmitSuccessful}
-            submitEditFormError={submitEditFormError}
+            submitEditFormStatus={submitEditFormStatus}
           />
           <Route path='*'>
             <PageNotFound />
