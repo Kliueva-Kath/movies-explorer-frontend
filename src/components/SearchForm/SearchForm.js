@@ -1,9 +1,11 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
 function SearchForm({ keyword, handleSearch, toggleCheckbox }) {
+  const location = useLocation();
   const { values, handleChange, setValues } = useFormWithValidation({});
 
   function handleSubmit(evt) {
@@ -11,6 +13,16 @@ function SearchForm({ keyword, handleSearch, toggleCheckbox }) {
     handleSearch(values.keyword);
     console.log("сабмит формы поиска фильмов");
   }
+
+  console.log(localStorage.getItem("isShortMovie"));
+  console.log(localStorage.getItem("foundMovies"));
+  console.log(localStorage.getItem("shortFoundMovies"));
+
+  useEffect(() => {
+    if (keyword) {
+      setValues(keyword);
+    }
+  }, [location.pathname]);
 
   return (
     <section className='search-form'>

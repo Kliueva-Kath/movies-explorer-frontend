@@ -50,7 +50,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setCurrentUser(res);
-            history.push("/");
+            //   history.push("/");
             console.log("token check happened");
           }
         })
@@ -70,7 +70,6 @@ function App() {
         setSubmitSuccessful(false);
       });
   }
-  //TODO настроить блок .catch
 
   function handleLogout() {
     localStorage.clear();

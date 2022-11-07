@@ -11,10 +11,12 @@ function Movies({ isLoggedIn }) {
   const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
+  const [shortFoundMovies, setShortFoundMovies] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [searchError, setSearchError] = useState("");
   const [isShortMovie, setShortMovie] = useState(false);
   const [isCheckboxOn, setCheckboxOn] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     moviesApi
@@ -63,10 +65,27 @@ function Movies({ isLoggedIn }) {
     } else {
       setSearchError("Ничего не найдено");
     }
+    if (isCheckboxOn) {
+      localStorage.setItem("isShortMovie", "true");
+      setFoundMovies(
+        foundMovies.filter((movie) => {
+          return movie.duration <= 40;
+        })
+      );
+    } else {
+      localStorage.setItem("isShortMovie", "false");
+    }
+    return isCheckboxOn ? shortFoundMovies : foundMovies;
   }
 
   function toggleCheckbox() {
     setCheckboxOn(!isCheckboxOn);
+    if (!isCheckboxOn) {
+      setSearchResults(shortFoundMovies);
+    }
+    if (isCheckboxOn) {
+      setSearchResults(foundMovies);
+    }
   }
 
   return (
