@@ -4,9 +4,11 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
 function SearchForm({ keyword, handleSearch, toggleCheckbox, isCheckboxOn }) {
-  const { values, handleChange, setValues } = useFormWithValidation({
-    keyword: "",
-  });
+  const { values, handleChange, setValues } = useFormWithValidation({});
+
+  useEffect(() => {
+    setValues({ keyword: keyword });
+  }, [keyword, setValues]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -33,7 +35,10 @@ function SearchForm({ keyword, handleSearch, toggleCheckbox, isCheckboxOn }) {
           Найти
         </button>
       </form>
-      <FilterCheckbox toggleCheckbox={toggleCheckbox} />
+      <FilterCheckbox
+        toggleCheckbox={toggleCheckbox}
+        isCheckboxOn={isCheckboxOn}
+      />
     </section>
   );
 }

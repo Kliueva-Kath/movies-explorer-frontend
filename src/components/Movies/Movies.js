@@ -7,13 +7,13 @@ import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
-function Movies({ isLoggedIn }) {
-  const location = useLocation();
+function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
+  const { pathname } = useLocation();
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [searchError, setSearchError] = useState("");
-  const [isShortMovie, setShortMovie] = useState(false);
+  // const [isShortMovie, setShortMovie] = useState(false);
   const [isCheckboxOn, setCheckboxOn] = useState(false);
 
   useEffect(() => {
@@ -30,44 +30,49 @@ function Movies({ isLoggedIn }) {
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
         );
       });
-  }, [keyword]);
+  }, []);
   //TODO: настроить блок .catch;
 
   useEffect(() => {
+    if (localStorage.getItem("keyword")) {
+      setKeyword(localStorage.getItem("keyword"));
+    }
     if (localStorage.getItem("foundMovies")) {
       setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
     }
-    if (localStorage.getItem("isShortMovie") === "true") {
-      setShortMovie(true);
+    if (localStorage.getItem("isCheckboxOn") === "true") {
+      setCheckboxOn(true);
     }
-    if (localStorage.getItem("isShortMovie") === "false") {
-      setShortMovie(false);
+    if (localStorage.getItem("isCheckboxOn") === "false") {
+      setCheckboxOn(false);
     }
     console.log("поиск уже имеющихся настроек для поиска");
-  }, [location.pathname]);
+  }, [pathname === "/movies"]);
 
   function handleSearch(value) {
-    setKeyword(value);
-    localStorage.setItem("keyword", value);
+    if (value) {
+      setKeyword(value);
+      localStorage.setItem("keyword", value);
 
-    /* const movies = JSON.parse(localStorage.getItem("movies")); */
+      /* const movies = JSON.parse(localStorage.getItem("movies")); */
 
-    const filteredMovies = movies.filter((movie) =>
-      movie.nameRU.toLowerCase().includes(value.toLowerCase())
-    );
-
-    if (filteredMovies.length !== 0) {
+      const filteredMovies = movies.filter((movie) =>
+        movie.nameRU.toLowerCase().includes(value.toLowerCase())
+      );
       localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
-      setSearchError("");
-      setFoundMovies(filteredMovies);
-    } else {
-      setSearchError("Ничего не найдено");
-    }
-    checkIfShortMovie(filteredMovies);
+      if (filteredMovies.length !== 0) {
+        setSearchError("");
+        setFoundMovies(filteredMovies);
+      } else {
+        setSearchError("Ничего не найдено");
+        setFoundMovies([]);
+      }
+      checkIfShortMovie(filteredMovies);
 
-    isCheckboxOn
-      ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
-      : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
+      isCheckboxOn
+        ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
+        : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
+    }
   }
 
   function checkIfShortMovie(filteredMovies) {
@@ -91,6 +96,15 @@ function Movies({ isLoggedIn }) {
     setCheckboxOn(!isCheckboxOn);
   }
 
+  function checkIfSaved() {}
+
+  // отрисовка в зависимости от размера экрана
+
+  /*   useEffect(() => {
+    window.addEventListener("resize", renderCards);
+    return () => window.removeEventListener("resize", renderCards);
+  }); */
+
   return (
     <main className='movies'>
       <Header isLoggedIn={isLoggedIn} />
@@ -100,7 +114,14 @@ function Movies({ isLoggedIn }) {
         toggleCheckbox={toggleCheckbox}
         isCheckboxOn={isCheckboxOn}
       />
-      {!searchError && <MoviesCardList movies={foundMovies} />}
+      {!searchError && (
+        <MoviesCardList
+          movies={pathname === "/movies" ? foundMovies : savedMovies}
+          onDeleteMovie={onDeleteMovie}
+          onSaveMovie={onSaveMovie}
+          savedMovies={savedMovies}
+        />
+      )}
       {searchError && <p className='movies__empty-search'>{searchError}</p>}
       <Footer />
     </main>

@@ -24,6 +24,57 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
   const [submitEditFormStatus, setSubmitEditFormStatus] = useState("");
+  const [isMovieSaved, setMoviesSaved] = useState(false);
+
+  // получаем и устанавливаем информацию о пользователе с сервера
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  function handleSaveMovie(data) {
+    mainApi
+      .saveMovie(data)
+      .then((movie) => {
+        setSavedMovies([...savedMovies, movie]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  console.log(savedMovies);
+
+  function handleDeleteMovie(movie) {
+    mainApi
+      .deleteMovie(movie.id)
+      .then((res) => {
+        setSavedMovies((state) => state.filter((m) => m.id !== movie.id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleLogin(data) {
     mainApi
@@ -57,6 +108,8 @@ function App() {
         .catch((err) => {
           console.log(err, "в проверке токена");
         });
+    } else {
+      localStorage.clear();
     }
   }, []);
 
@@ -76,7 +129,6 @@ function App() {
     localStorage.clear();
     setLoggedIn(false);
     history.push("/");
-    console.log("logout clicked");
   }
 
   function handleUserUpdate(values) {
@@ -97,20 +149,6 @@ function App() {
         }
       });
   }
-
-  // получаем и устанавливаем информацию о пользователе с сервера
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi
-        .getUserInfo()
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -135,12 +173,16 @@ function App() {
             path='/movies'
             component={Movies}
             isLoggedIn={isLoggedIn}
+            onSaveMovie={handleSaveMovie}
+            onDeleteMovie={handleDeleteMovie}
+            savedMovies={savedMovies}
           />
           <ProtectedRoute
             path='/saved-movies'
             component={SavedMovies}
             isLoggedIn={isLoggedIn}
             savedMovies={savedMovies}
+            onDeleteMovie={handleDeleteMovie}
           />
           <ProtectedRoute
             path='/profile'

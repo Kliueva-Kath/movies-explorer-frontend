@@ -5,12 +5,12 @@ import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
-function SavedMovies({ savedMovies, isLoggedIn }) {
+function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
   return (
     <main className='saved-movies'>
       <Header isLoggedIn={isLoggedIn} />
       <SearchForm />
-      <MoviesCardList savedMovies={savedMovies} />
+      <MoviesCardList movies={savedMovies} onDeleteMovie={onDeleteMovie} />
       <Footer />
     </main>
   );

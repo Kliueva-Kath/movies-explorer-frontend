@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   const { pathname } = useLocation();
   const [isSaved, setSaved] = useState(false);
+
+  function toggleSave() {
+    if (isSaved) {
+      deleteMovie(movie);
+    } else {
+      saveMovie(movie);
+    }
+  }
+
+  function saveMovie(movie) {
+    onSaveMovie(movie);
+    setSaved(true);
+    console.log(movie, "сохраненный фильм");
+  }
+
+  function deleteMovie(movie) {
+    console.log(movie, "фильм перед удалением");
+    onDeleteMovie(movie);
+    setSaved(false);
+  }
 
   function getMovieDuration(minutes) {
     if (minutes > 60) {
@@ -16,6 +36,24 @@ function MoviesCard({ movie }) {
     }
   }
 
+  useEffect(() => {
+    setSaved(
+      pathname === "/movies"
+        ? savedMovies.some((savedMovie) => {
+            return savedMovie.movieId === movie.id;
+          })
+        : true
+    );
+  }, [pathname === "/movies", "/saved-movies"]);
+
+  /*   function checkIfSaved() {
+    savedMovies.map((savedMovie) => {
+      if (savedMovie.movieId === movie.id) {
+        setSaved(true);
+      }
+    });
+  }
+ */
   return (
     <li className='movie'>
       <div className='movie__top-panel'>
@@ -28,7 +66,8 @@ function MoviesCard({ movie }) {
             type='button'
             className={`movie__button movie__save-button ${
               isSaved && "movie__save-button_active"
-            }`}></button>
+            }`}
+            onClick={toggleSave}></button>
         ) : (
           <button
             type='button'

@@ -26,45 +26,6 @@ function Header({ isLoggedIn }) {
     setMenuOpen(!isMenuOpen);
   }
 
-  /*   return (
-    <Switch>
-      <Route exact path='/'>
-        <header className='header__landing'>
-          <Link to='/' className='header__logo-link'>
-            <img className='header__logo' src={logoPath} alt='логотип' />
-          </Link>
-          <div className='header__auth-links'>
-            <Link to='/signup' className='header__register-link'>
-              Регистрация
-            </Link>
-            <Link to='signin' className='header__login-link'>
-              Войти
-            </Link>
-          </div>
-        </header>
-      </Route>
-      <Route path={["/movies", "/saved-movies"]}>
-        {!isDesktop && (
-          <MobileMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-        )}
-        <header className='header__logged-in'>
-          <Link to='/' className='header__logo-link'>
-            <img className='header__logo' src={logoPath} alt='логотип' />
-          </Link>
-          {(() => {
-            if (isDesktop) {
-              return <Navigation isLoggedIn={isLoggedIn} />;
-            } else {
-              return (
-                <button className='header__menu-burger' onClick={toggleMenu} />
-              );
-            }
-          })()}
-        </header>
-      </Route>
-    </Switch>
-  ); */
-
   return (
     <header
       className={pathname === "/" ? "header__landing" : "header__logged-in"}>
