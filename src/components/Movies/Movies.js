@@ -52,16 +52,38 @@ function Movies({ isLoggedIn }) {
 
     /* const movies = JSON.parse(localStorage.getItem("movies")); */
 
-    const foundMovies = movies.filter((movie) =>
+    const filteredMovies = movies.filter((movie) =>
       movie.nameRU.toLowerCase().includes(value.toLowerCase())
     );
-    console.log(movies);
-    if (foundMovies.length !== 0) {
-      localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
+
+    if (filteredMovies.length !== 0) {
+      localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
       setSearchError("");
-      setFoundMovies(foundMovies);
+      setFoundMovies(filteredMovies);
     } else {
       setSearchError("Ничего не найдено");
+    }
+    checkIfShortMovie(filteredMovies);
+
+    isCheckboxOn
+      ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
+      : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
+  }
+
+  function checkIfShortMovie(filteredMovies) {
+    if (isCheckboxOn) {
+      localStorage.setItem("isCheckboxOn", "true");
+      const filteredShortMovies = filteredMovies.filter((movie) => {
+        return movie.duration <= 40;
+      });
+      localStorage.setItem(
+        "foundShortMovies",
+        JSON.stringify(filteredShortMovies)
+      );
+      return filteredShortMovies;
+    } else {
+      localStorage.setItem("isCheckboxOn", "false");
+      return;
     }
   }
 
@@ -76,6 +98,7 @@ function Movies({ isLoggedIn }) {
         keyword={keyword}
         handleSearch={handleSearch}
         toggleCheckbox={toggleCheckbox}
+        isCheckboxOn={isCheckboxOn}
       />
       {!searchError && <MoviesCardList movies={foundMovies} />}
       {searchError && <p className='movies__empty-search'>{searchError}</p>}

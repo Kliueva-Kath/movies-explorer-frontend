@@ -103,7 +103,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: "https://api.movies.kliueva.nomoredomains.icu",
+  /* baseUrl: "https://api.movies.kliueva.nomoredomains.icu", */
+  baseUrl: "http://localhost:4000",
   headers: {
     "content-type": "application/json",
     authorization: `Bearer ${localStorage.getItem("token")}`,
