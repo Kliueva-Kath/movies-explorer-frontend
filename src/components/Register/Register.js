@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function Register({ onRegistration, isSubmitSuccessful }) {
+function Register({ onRegistration, isSubmitSuccessful, authError }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
 
@@ -21,7 +21,7 @@ function Register({ onRegistration, isSubmitSuccessful }) {
       <AuthForm
         title='Добро пожаловать!'
         buttonText='Зарегистрироваться'
-        submitErrorText='Пользователь с таким email уже существует.'
+        authError={authError}
         name='register'
         onSubmit={handleSubmit}
         isValid={isValid}

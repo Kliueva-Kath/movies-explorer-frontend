@@ -17,28 +17,29 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const [isCheckboxOn, setCheckboxOn] = useState(false);
 
   useEffect(() => {
-    moviesApi
-      .getMovies()
-      .then((movies) => {
-        setMovies(movies);
-        localStorage.setItem("movies", JSON.stringify(movies));
-        console.log("прошел запрос фильмов к api");
-      })
-      .catch((err) => {
-        console.log(err);
-        setSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-      });
-  }, []);
+    if (isLoggedIn) {
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          setMovies(movies);
+          //  localStorage.setItem("movies", JSON.stringify(movies));
+          console.log("прошел запрос фильмов к api");
+          console.log(movies, "дата с апи фильмов");
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log("прошел неудачный запрос фильмов к api");
+          setSearchError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+        });
+    }
+  }, [isLoggedIn]);
   //TODO: настроить блок .catch;
 
   useEffect(() => {
     if (localStorage.getItem("keyword")) {
       setKeyword(localStorage.getItem("keyword"));
-    }
-    if (localStorage.getItem("foundMovies")) {
-      setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
     }
     if (localStorage.getItem("isCheckboxOn") === "true") {
       setCheckboxOn(true);
@@ -46,6 +47,13 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     if (localStorage.getItem("isCheckboxOn") === "false") {
       setCheckboxOn(false);
     }
+    if (localStorage.getItem("foundMovies") && !isCheckboxOn) {
+      setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
+    }
+    if (localStorage.getItem("foundShortMovies") && isCheckboxOn) {
+      setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")));
+    }
+
     console.log("поиск уже имеющихся настроек для поиска");
   }, [pathname === "/movies"]);
 
@@ -53,8 +61,6 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     if (value) {
       setKeyword(value);
       localStorage.setItem("keyword", value);
-
-      /* const movies = JSON.parse(localStorage.getItem("movies")); */
 
       const filteredMovies = movies.filter((movie) =>
         movie.nameRU.toLowerCase().includes(value.toLowerCase())
@@ -96,15 +102,6 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     setCheckboxOn(!isCheckboxOn);
   }
 
-  function checkIfSaved() {}
-
-  // отрисовка в зависимости от размера экрана
-
-  /*   useEffect(() => {
-    window.addEventListener("resize", renderCards);
-    return () => window.removeEventListener("resize", renderCards);
-  }); */
-
   return (
     <main className='movies'>
       <Header isLoggedIn={isLoggedIn} />
@@ -116,7 +113,7 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
       />
       {!searchError && (
         <MoviesCardList
-          movies={pathname === "/movies" ? foundMovies : savedMovies}
+          movies={foundMovies}
           onDeleteMovie={onDeleteMovie}
           onSaveMovie={onSaveMovie}
           savedMovies={savedMovies}

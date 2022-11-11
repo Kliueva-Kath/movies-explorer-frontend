@@ -7,7 +7,7 @@ function AuthForm({
   title,
   children,
   buttonText,
-  submitErrorText,
+  authError,
   name,
   onSubmit,
   isValid,
@@ -24,7 +24,7 @@ function AuthForm({
         onSubmit={onSubmit}>
         {children}
         {!isSubmitSuccessful && (
-          <span className='auth-form__submit-error'>{submitErrorText}</span>
+          <span className='auth-form__submit-error'>{authError}</span>
         )}
         <button
           type='submit'

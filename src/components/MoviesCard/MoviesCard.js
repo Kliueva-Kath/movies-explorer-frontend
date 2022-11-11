@@ -9,6 +9,7 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   function toggleSave() {
     if (isSaved) {
       deleteMovie(movie);
+      console.log(movie.movieId);
     } else {
       saveMovie(movie);
     }
@@ -71,7 +72,8 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
         ) : (
           <button
             type='button'
-            className='movie__button movie__delete-button'></button>
+            className='movie__button movie__delete-button'
+            onClick={toggleSave}></button>
         )}
       </div>
       <a
@@ -81,7 +83,11 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
         rel='noopener noreferrer'>
         <img
           className='movie__image'
-          src={`https://api.nomoreparties.co/${movie.image.url}`}
+          src={
+            pathname === "/movies"
+              ? `https://api.nomoreparties.co${movie.image.url}`
+              : movie.image
+          }
           alt={movie.nameRU}
         />
       </a>

@@ -25,6 +25,7 @@ function App() {
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
   const [submitEditFormStatus, setSubmitEditFormStatus] = useState("");
   const [isMovieSaved, setMoviesSaved] = useState(false);
+  const [authError, setAuthError] = useState("");
 
   // получаем и устанавливаем информацию о пользователе с сервера
   useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
         .getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
+          console.log(movies, "сохраненные фильмы с сервера");
         })
         .catch((err) => {
           console.log(err);
@@ -60,10 +62,9 @@ function App() {
         setSavedMovies([...savedMovies, movie]);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "ошибка при сохранении фильма");
       });
   }
-  console.log(savedMovies);
 
   function handleDeleteMovie(movie) {
     mainApi
@@ -89,6 +90,17 @@ function App() {
       .catch((err) => {
         console.log(err);
         setSubmitSuccessful(false);
+        if (err.contains("404")) {
+          setAuthError("Вы ввели неправильный логин или пароль.");
+        } else if (err.contains("401")) {
+          setAuthError(
+            "При авторизации произошла ошибка. Токен не передан или передан не в том формате."
+          );
+        } else if (err.contains("403")) {
+          setAuthError(
+            "При авторизации произошла ошибка. Переданный токен некорректен."
+          );
+        }
       });
   }
 
@@ -117,10 +129,17 @@ function App() {
     mainApi
       .register(data)
       .then((res) => {
-        history.push("/signin");
+        console.log(res, "регистрация прошла");
+        handleLogin(data);
+        history.push("/movies");
       })
       .catch((err) => {
         setSubmitSuccessful(false);
+        if (err.contains("409")) {
+          setAuthError("Пользователь с таким email уже существует.");
+        } else {
+          setAuthError("При обновлении профиля произошла ошибка.");
+        }
       });
   }
   //TODO настроить блок .catch
@@ -161,12 +180,14 @@ function App() {
             <Login
               onLogin={handleLogin}
               isSubmitSuccessful={isSubmitSuccessful}
+              authError={authError}
             />
           </Route>
           <Route path='/signup'>
             <Register
               onRegistration={handleRegistration}
               isSubmitSuccessful={isSubmitSuccessful}
+              authError={authError}
             />
           </Route>
           <ProtectedRoute

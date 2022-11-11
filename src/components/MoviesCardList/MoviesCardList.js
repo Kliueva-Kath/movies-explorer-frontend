@@ -1,8 +1,11 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
 
 function MoviesCardList({ movies, onDeleteMovie, onSaveMovie, savedMovies }) {
+  const { pathname } = useLocation();
+
   return (
     <section className='movies-list'>
       <ul className='movies-list__container'>
@@ -10,8 +13,8 @@ function MoviesCardList({ movies, onDeleteMovie, onSaveMovie, savedMovies }) {
           return (
             <MoviesCard
               movie={movie}
-              id={movie.id}
-              key={movie.id}
+              id={pathname === "/movies" ? movie.id : movie.movieId}
+              key={pathname === "/movies" ? movie.id : movie.movieId}
               onDeleteMovie={onDeleteMovie}
               onSaveMovie={onSaveMovie}
               savedMovies={savedMovies}
@@ -19,9 +22,11 @@ function MoviesCardList({ movies, onDeleteMovie, onSaveMovie, savedMovies }) {
           );
         })}
       </ul>
-      <button type='button' className='movies-list__show-more'>
-        Ещё
-      </button>
+      {pathname === "/movies" && (
+        <button type='button' className='movies-list__show-more'>
+          Ещё
+        </button>
+      )}
     </section>
   );
 }
