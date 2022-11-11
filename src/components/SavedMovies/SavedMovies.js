@@ -14,7 +14,7 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
 
   useEffect(() => {
     setFoundMovies(savedMovies);
-  }, [pathname]);
+  }, [pathname, savedMovies]);
 
   function handleSearch(value) {
     if (value) {

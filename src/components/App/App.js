@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
@@ -16,8 +16,10 @@ import initialMovies from "../../utils/initialMovies.js";
 
 function App() {
   const history = useHistory();
+  const { pathname } = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
+
   /*   const [isLoggedIn, setLoggedIn] = useState(
     Boolean(localStorage.getItem("token"))
   ); */
@@ -66,11 +68,13 @@ function App() {
       });
   }
 
-  function handleDeleteMovie(movie) {
+  function handleDeleteMovie(movieId) {
     mainApi
-      .deleteMovie(movie.id)
+      .deleteMovie(movieId)
       .then((res) => {
-        setSavedMovies((state) => state.filter((m) => m.id !== movie.id));
+        setSavedMovies((state) =>
+          state.filter((m) => m.id || m.movieId !== movieId)
+        );
       })
       .catch((err) => {
         console.log(err);

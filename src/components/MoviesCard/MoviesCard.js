@@ -9,7 +9,6 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   function toggleSave() {
     if (isSaved) {
       deleteMovie(movie);
-      console.log(movie.movieId);
     } else {
       saveMovie(movie);
     }
@@ -23,7 +22,10 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
 
   function deleteMovie(movie) {
     console.log(movie, "фильм перед удалением");
-    onDeleteMovie(movie);
+    pathname === "/movies"
+      ? onDeleteMovie(movie.id)
+      : onDeleteMovie(movie.movieId);
+
     setSaved(false);
   }
 
