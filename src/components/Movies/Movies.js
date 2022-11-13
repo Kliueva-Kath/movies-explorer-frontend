@@ -13,8 +13,10 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const [foundMovies, setFoundMovies] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [searchError, setSearchError] = useState("");
-  // const [isShortMovie, setShortMovie] = useState(false);
   const [isCheckboxOn, setCheckboxOn] = useState(false);
+  const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
+  const [renderedMovies, setRenderedMovies] = useState(foundMovies);
+  const [isShowMoreButtonActive, setShowMoreButtonActive] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -102,6 +104,52 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     setCheckboxOn(!isCheckboxOn);
   }
 
+  // ПОКАЗ КАРТОЧЕК ПО КОЛИЧЕСТВУ
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
+
+  const updateMedia = () => {
+    setTimeout(() => {
+      setCurrentWidth(window.innerWidth);
+    }, 4000);
+  };
+
+  function countRenderedMovies(foundMovies) {
+    if (currentWidth > 1210) {
+      setRenderedMovies(foundMovies.slice(0, 12));
+    } else if (currentWidth > 767 && currentWidth <= 1210) {
+      setRenderedMovies(foundMovies.slice(0, 8));
+    } else {
+      setRenderedMovies(foundMovies.slice(0, 5));
+    }
+  }
+
+  useEffect(() => {
+    if (renderedMovies.length < foundMovies.length) {
+      setShowMoreButtonActive(true);
+    } else {
+      setShowMoreButtonActive(false);
+    }
+  });
+
+  useEffect(() => {
+    countRenderedMovies(foundMovies);
+    console.log(renderedMovies);
+  }, [currentWidth, foundMovies]);
+
+  function handleShowMoreButtonClick() {
+    if (renderedMovies.length < foundMovies.length && currentWidth > 1210) {
+      setRenderedMovies(foundMovies.slice(0, renderedMovies.length + 3));
+    } else if (
+      renderedMovies.length < foundMovies.length &&
+      currentWidth <= 1210
+    ) {
+      setRenderedMovies(foundMovies.slice(0, renderedMovies.length + 2));
+    }
+  }
+
   return (
     <main className='movies'>
       <Header isLoggedIn={isLoggedIn} />
@@ -113,13 +161,21 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
       />
       {!searchError && (
         <MoviesCardList
-          movies={foundMovies}
+          movies={renderedMovies}
           onDeleteMovie={onDeleteMovie}
           onSaveMovie={onSaveMovie}
           savedMovies={savedMovies}
         />
       )}
       {searchError && <p className='movies__empty-search'>{searchError}</p>}
+      {isShowMoreButtonActive && (
+        <button
+          type='button'
+          className='movies__show-more'
+          onClick={handleShowMoreButtonClick}>
+          Ещё
+        </button>
+      )}
       <Footer />
     </main>
   );

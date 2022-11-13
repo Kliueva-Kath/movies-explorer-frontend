@@ -36,6 +36,14 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
             JSON.parse(localStorage.getItem("foundSavedShortMovies"))
           )
         : setFoundMovies(JSON.parse(localStorage.getItem("foundSavedMovies")));
+    } else {
+      isCheckboxOn
+        ? setFoundMovies(
+            savedMovies.filter((movie) => {
+              return movie.duration <= 40;
+            })
+          )
+        : setFoundMovies(savedMovies);
     }
   }
 
@@ -48,8 +56,10 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
         "foundSavedShortMovies",
         JSON.stringify(filteredShortMovies)
       );
+      console.log("checkbox toggled");
       return filteredShortMovies;
     } else {
+      console.log("checkbox toggled");
       return;
     }
   }
@@ -60,7 +70,11 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
   return (
     <main className='saved-movies'>
       <Header isLoggedIn={isLoggedIn} />
-      <SearchForm toggleCheckbox={toggleCheckbox} handleSearch={handleSearch} />
+      <SearchForm
+        toggleCheckbox={toggleCheckbox}
+        handleSearch={handleSearch}
+        isCheckboxOn={isCheckboxOn}
+      />
       {!searchError && (
         <MoviesCardList
           movies={foundMovies}

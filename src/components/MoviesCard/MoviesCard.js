@@ -21,7 +21,7 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   }
 
   function deleteMovie(movie) {
-    console.log(movie, "фильм перед удалением");
+    console.log(movie.owner, "владелец фильма перед удалением");
     pathname === "/movies"
       ? onDeleteMovie(movie.id)
       : onDeleteMovie(movie.movieId);
@@ -49,14 +49,6 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
     );
   }, [pathname === "/movies", "/saved-movies"]);
 
-  /*   function checkIfSaved() {
-    savedMovies.map((savedMovie) => {
-      if (savedMovie.movieId === movie.id) {
-        setSaved(true);
-      }
-    });
-  }
- */
   return (
     <li className='movie'>
       <div className='movie__top-panel'>

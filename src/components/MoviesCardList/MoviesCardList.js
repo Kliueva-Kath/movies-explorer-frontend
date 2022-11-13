@@ -22,11 +22,6 @@ function MoviesCardList({ movies, onDeleteMovie, onSaveMovie, savedMovies }) {
           );
         })}
       </ul>
-      {pathname === "/movies" && (
-        <button type='button' className='movies-list__show-more'>
-          Ещё
-        </button>
-      )}
     </section>
   );
 }

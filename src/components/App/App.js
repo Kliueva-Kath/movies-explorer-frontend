@@ -94,13 +94,13 @@ function App() {
       .catch((err) => {
         console.log(err);
         setSubmitSuccessful(false);
-        if (err.contains("404")) {
+        if (err.includes("404")) {
           setAuthError("Вы ввели неправильный логин или пароль.");
-        } else if (err.contains("401")) {
+        } else if (err.includes("401")) {
           setAuthError(
             "При авторизации произошла ошибка. Токен не передан или передан не в том формате."
           );
-        } else if (err.contains("403")) {
+        } else if (err.includes("403")) {
           setAuthError(
             "При авторизации произошла ошибка. Переданный токен некорректен."
           );
@@ -125,6 +125,7 @@ function App() {
           console.log(err, "в проверке токена");
         });
     } else {
+      setLoggedIn(false);
       localStorage.clear();
     }
   }, []);
@@ -139,7 +140,7 @@ function App() {
       })
       .catch((err) => {
         setSubmitSuccessful(false);
-        if (err.contains("409")) {
+        if (err.includes("409")) {
           setAuthError("Пользователь с таким email уже существует.");
         } else {
           setAuthError("При обновлении профиля произошла ошибка.");
