@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, Redirect } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
@@ -113,7 +113,6 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setCurrentUser(res);
-            history.push("/");
           }
         })
         .catch((err) => {
@@ -186,13 +185,21 @@ function App() {
             <Main isLoggedIn={isLoggedIn} />
           </Route>
           <Route path='/signin'>
-            <Login
-              onLogin={handleLogin}
-              isSubmitSuccessful={isSubmitSuccessful}
-            />
+            {isLoggedIn ? (
+              <Redirect to='./' />
+            ) : (
+              <Login
+                onLogin={handleLogin}
+                isSubmitSuccessful={isSubmitSuccessful}
+              />
+            )}
           </Route>
           <Route path='/signup'>
-            <Register onRegistration={handleRegistration} />
+            {isLoggedIn ? (
+              <Redirect to='./' />
+            ) : (
+              <Register onRegistration={handleRegistration} />
+            )}
           </Route>
           <ProtectedRoute
             path='/movies'
