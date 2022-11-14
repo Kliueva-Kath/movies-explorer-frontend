@@ -45,15 +45,11 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     }
     if (localStorage.getItem("isCheckboxOn") === "true") {
       setCheckboxOn(true);
+      setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")));
     }
     if (localStorage.getItem("isCheckboxOn") === "false") {
       setCheckboxOn(false);
-    }
-    if (localStorage.getItem("foundMovies") && !isCheckboxOn) {
       setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
-    }
-    if (localStorage.getItem("foundShortMovies") && isCheckboxOn) {
-      setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")));
     }
 
     console.log("поиск уже имеющихся настроек для поиска");

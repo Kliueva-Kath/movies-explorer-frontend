@@ -4,13 +4,7 @@ import Header from "../Header/Header.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function Profile({
-  isLoggedIn,
-  onLogout,
-  onSubmit,
-  isSubmitSuccessful,
-  submitEditFormStatus,
-}) {
+function Profile({ isLoggedIn, onLogout, onSubmit }) {
   const {
     values,
     setValues,
@@ -32,8 +26,16 @@ function Profile({
 
   function handleEditButtonClick() {
     setEditing(true);
-    setValid(true);
   }
+
+  useEffect(() => {
+    if (
+      values.name === currentUser.name &&
+      values.email === currentUser.email
+    ) {
+      setValid(false);
+    }
+  });
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -81,12 +83,6 @@ function Profile({
               required
             />
           </div>
-          <span
-            className={`${!isSubmitSuccessful && "profile__submit-error"} ${
-              isSubmitSuccessful && "profile__submit-success"
-            }`}>
-            {submitEditFormStatus}
-          </span>
           {isEditing && (
             <button
               className={`profile__save-button ${

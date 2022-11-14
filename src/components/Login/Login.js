@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 
-function Login({ onLogin, isSubmitSuccessful, authError }) {
+function Login({ onLogin }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
 
@@ -20,9 +20,7 @@ function Login({ onLogin, isSubmitSuccessful, authError }) {
         buttonText='Войти'
         name='login'
         onSubmit={handleSubmit}
-        isValid={isValid}
-        isSubmitSuccessful={isSubmitSuccessful}
-        authError={authError}>
+        isValid={isValid}>
         <label htmlFor='email' className='auth-form__label'>
           E-mail
         </label>

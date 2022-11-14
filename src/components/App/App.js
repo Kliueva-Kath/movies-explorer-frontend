@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
@@ -12,22 +12,19 @@ import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
 import PageNotFound from "../PageNotFound/PageNotFound.js";
-import initialMovies from "../../utils/initialMovies.js";
+import InfoTooltip from "../InfoTooltip/InfoTooltip.js";
 
 function App() {
   const history = useHistory();
-  const { pathname } = useLocation();
+
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
-
-  /*   const [isLoggedIn, setLoggedIn] = useState(
-    Boolean(localStorage.getItem("token"))
-  ); */
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
-  const [submitEditFormStatus, setSubmitEditFormStatus] = useState("");
-  const [isMovieSaved, setMoviesSaved] = useState(false);
-  const [authError, setAuthError] = useState("");
+
+  // Попапы
+  const [submitStatus, setSubmitStatus] = useState("");
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
   // получаем и устанавливаем информацию о пользователе с сервера
   useEffect(() => {
@@ -64,7 +61,9 @@ function App() {
         setSavedMovies([...savedMovies, movie]);
       })
       .catch((err) => {
-        console.log(err, "ошибка при сохранении фильма");
+        setSubmitSuccessful(false);
+        setSubmitStatus("При сохранении фильма произошла ошибка.");
+        setInfoTooltipOpen(true);
       });
   }
 
@@ -78,6 +77,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setSubmitSuccessful(false);
+        setSubmitStatus("При удалении фильма произошла ошибка.");
+        setInfoTooltipOpen(true);
       });
   }
 
@@ -94,17 +96,14 @@ function App() {
       .catch((err) => {
         console.log(err);
         setSubmitSuccessful(false);
-        if (err.includes("404")) {
-          setAuthError("Вы ввели неправильный логин или пароль.");
-        } else if (err.includes("401")) {
-          setAuthError(
-            "При авторизации произошла ошибка. Токен не передан или передан не в том формате."
-          );
-        } else if (err.includes("403")) {
-          setAuthError(
+        if (err.includes("401")) {
+          setSubmitStatus("Вы ввели неправильный логин или пароль.");
+        } else {
+          setSubmitStatus(
             "При авторизации произошла ошибка. Переданный токен некорректен."
           );
         }
+        setInfoTooltipOpen(true);
       });
   }
 
@@ -134,17 +133,20 @@ function App() {
     mainApi
       .register(data)
       .then((res) => {
-        console.log(res, "регистрация прошла");
         handleLogin(data);
+        setSubmitSuccessful(true);
+        setSubmitStatus("Вы успешно зарегистрировались.");
+        setInfoTooltipOpen(true);
         history.push("/movies");
       })
       .catch((err) => {
         setSubmitSuccessful(false);
         if (err.includes("409")) {
-          setAuthError("Пользователь с таким email уже существует.");
+          setSubmitStatus("Пользователь с таким email уже существует.");
         } else {
-          setAuthError("При обновлении профиля произошла ошибка.");
+          setSubmitStatus("При обновлении профиля произошла ошибка.");
         }
+        setInfoTooltipOpen(true);
       });
   }
   //TODO настроить блок .catch
@@ -161,17 +163,24 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setSubmitSuccessful(true);
-        setSubmitEditFormStatus("Данные пользователя успешно изменены.");
+        setSubmitStatus("Данные пользователя успешно изменены.");
+        setInfoTooltipOpen(true);
       })
       .catch((err) => {
         console.log(err);
         setSubmitSuccessful(false);
         if (err === "Ошибка: 409") {
-          setSubmitEditFormStatus("Пользователь с таким email уже существует.");
+          setSubmitStatus("Пользователь с таким email уже существует.");
         } else {
-          setSubmitEditFormStatus("При обновлении профиля произошла ошибка.");
+          setSubmitStatus("При обновлении профиля произошла ошибка.");
         }
+        setInfoTooltipOpen(true);
       });
+  }
+
+  // работа с попапами
+  function closeAllPopups() {
+    setInfoTooltipOpen(false);
   }
 
   return (
@@ -185,15 +194,10 @@ function App() {
             <Login
               onLogin={handleLogin}
               isSubmitSuccessful={isSubmitSuccessful}
-              authError={authError}
             />
           </Route>
           <Route path='/signup'>
-            <Register
-              onRegistration={handleRegistration}
-              isSubmitSuccessful={isSubmitSuccessful}
-              authError={authError}
-            />
+            <Register onRegistration={handleRegistration} />
           </Route>
           <ProtectedRoute
             path='/movies'
@@ -216,13 +220,17 @@ function App() {
             isLoggedIn={isLoggedIn}
             onLogout={handleLogout}
             onSubmit={handleUserUpdate}
-            isSubmitSuccessful={isSubmitSuccessful}
-            submitEditFormStatus={submitEditFormStatus}
           />
           <Route path='*'>
             <PageNotFound />
           </Route>
         </Switch>
+        <InfoTooltip
+          onClose={closeAllPopups}
+          isOpen={isInfoTooltipOpen}
+          submitStatus={submitStatus}
+          isSubmitSuccessful={isSubmitSuccessful}
+        />
       </div>
     </CurrentUserContext.Provider>
   );

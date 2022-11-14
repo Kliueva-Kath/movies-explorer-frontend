@@ -120,36 +120,6 @@
   margin: 0 auto 70px;
 }
 
-.profile__submit-error {
-  font-family: "Inter", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  text-align: center;
-  color: #ee3465;
-  margin: 0 auto 16px;
-  min-height: 12px;
-  position: absolute;
-  top: 170px;
-  width: 100%;
-}
-
-.profile__submit-success {
-  font-family: "Inter", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  text-align: center;
-  color: rgb(5, 173, 5);
-  margin: 0 auto 16px;
-  min-height: 12px;
-  position: absolute;
-  top: 170px;
-  width: 100%;
-}
-
 .profile__save-button {
   appearance: none;
   box-sizing: border-box;
