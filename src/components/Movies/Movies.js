@@ -6,6 +6,7 @@ import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
+import Preloader from "../Preloader/Preloader.js";
 
 function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const { pathname } = useLocation();
@@ -17,6 +18,7 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
   const [renderedMovies, setRenderedMovies] = useState(foundMovies);
   const [isShowMoreButtonActive, setShowMoreButtonActive] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -24,16 +26,13 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
         .getMovies()
         .then((movies) => {
           setMovies(movies);
-          //  localStorage.setItem("movies", JSON.stringify(movies));
+          localStorage.setItem("movies", JSON.stringify(movies));
           console.log("прошел запрос фильмов к api");
           console.log(movies, "дата с апи фильмов");
         })
         .catch((err) => {
           console.log(err);
           console.log("прошел неудачный запрос фильмов к api");
-          setSearchError(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          );
         });
     }
   }, [isLoggedIn]);
@@ -56,26 +55,35 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   }, [pathname === "/movies"]);
 
   function handleSearch(value) {
-    if (value) {
-      setKeyword(value);
-      localStorage.setItem("keyword", value);
+    setLoading(true);
+    try {
+      if (value) {
+        setKeyword(value);
+        localStorage.setItem("keyword", value);
 
-      const filteredMovies = movies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(value.toLowerCase())
-      );
-      localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
-      if (filteredMovies.length !== 0) {
-        setSearchError("");
-        setFoundMovies(filteredMovies);
-      } else {
-        setSearchError("Ничего не найдено");
-        setFoundMovies([]);
+        const filteredMovies = movies.filter((movie) =>
+          movie.nameRU.toLowerCase().includes(value.toLowerCase())
+        );
+        localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
+        if (filteredMovies.length !== 0) {
+          setSearchError("");
+          setFoundMovies(filteredMovies);
+        } else {
+          setSearchError("Ничего не найдено");
+          setFoundMovies([]);
+        }
+        checkIfShortMovie(filteredMovies);
+
+        isCheckboxOn
+          ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
+          : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
       }
-      checkIfShortMovie(filteredMovies);
-
-      isCheckboxOn
-        ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
-        : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
+    } catch (err) {
+      setSearchError(
+        "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+      );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -155,6 +163,7 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
         toggleCheckbox={toggleCheckbox}
         isCheckboxOn={isCheckboxOn}
       />
+      {isLoading && <Preloader />}
       {!searchError && (
         <MoviesCardList
           movies={renderedMovies}

@@ -3,6 +3,7 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
+import { emailRegExp } from "../../utils/constants.js";
 
 function Login({ onLogin }) {
   const { values, handleChange, errors, isValid, resetForm } =
@@ -33,6 +34,7 @@ function Login({ onLogin }) {
           placeholder='Email'
           value={values.email || ""}
           onChange={handleChange}
+          pattern={emailRegExp}
           required
         />
         <span className='auth-form__input-error'>{errors.email}</span>
