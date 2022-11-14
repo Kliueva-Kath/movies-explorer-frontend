@@ -6,8 +6,6 @@ import "./Header.css";
 import Navigation from "../Navigation/Navigation.js";
 import MobileMenu from "../MobileMenu/MobileMenu.js";
 
-//TODO исправить header в состоянии loggedIn
-
 function Header({ isLoggedIn }) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 800);
   const [isMenuOpen, setMenuOpen] = useState(false);

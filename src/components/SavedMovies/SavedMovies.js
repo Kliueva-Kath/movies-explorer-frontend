@@ -56,10 +56,8 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
         "foundSavedShortMovies",
         JSON.stringify(filteredShortMovies)
       );
-      console.log("checkbox toggled");
       return filteredShortMovies;
     } else {
-      console.log("checkbox toggled");
       return;
     }
   }

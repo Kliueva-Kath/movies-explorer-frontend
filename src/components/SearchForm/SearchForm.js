@@ -13,7 +13,6 @@ function SearchForm({ keyword, handleSearch, toggleCheckbox, isCheckboxOn }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     handleSearch(values.keyword);
-    console.log("сабмит формы поиска фильмов");
   }
 
   useEffect(() => {

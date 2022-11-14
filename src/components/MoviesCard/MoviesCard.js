@@ -17,11 +17,9 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   function saveMovie(movie) {
     onSaveMovie(movie);
     setSaved(true);
-    console.log(movie, "сохраненный фильм");
   }
 
   function deleteMovie(movie) {
-    console.log(movie.owner, "владелец фильма перед удалением");
     pathname === "/movies"
       ? onDeleteMovie(movie.id)
       : onDeleteMovie(movie.movieId);

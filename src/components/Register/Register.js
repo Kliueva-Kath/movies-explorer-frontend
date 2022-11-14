@@ -12,8 +12,6 @@ function Register({ onRegistration }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onRegistration(values);
-    console.log("запрос на регистрацию");
-    console.log(values);
     resetForm();
   }
 

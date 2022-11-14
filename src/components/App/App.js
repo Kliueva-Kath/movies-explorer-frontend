@@ -35,7 +35,7 @@ function App() {
           setCurrentUser(userInfo);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "при запросе данных пользователя");
         });
     }
   }, [isLoggedIn]);
@@ -46,10 +46,9 @@ function App() {
         .getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
-          console.log(movies, "сохраненные фильмы с сервера");
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "при запросе сохраненных фильмов");
         });
     }
   }, [isLoggedIn]);
@@ -76,7 +75,6 @@ function App() {
         );
       })
       .catch((err) => {
-        console.log(err);
         setSubmitSuccessful(false);
         setSubmitStatus("При удалении фильма произошла ошибка.");
         setInfoTooltipOpen(true);
@@ -94,7 +92,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
         setSubmitSuccessful(false);
         if (err.includes("401")) {
           setSubmitStatus("Вы ввели неправильный логин или пароль.");
@@ -117,7 +114,6 @@ function App() {
             setLoggedIn(true);
             setCurrentUser(res);
             history.push("/");
-            console.log("token check happened");
           }
         })
         .catch((err) => {
@@ -167,7 +163,6 @@ function App() {
         setInfoTooltipOpen(true);
       })
       .catch((err) => {
-        console.log(err);
         setSubmitSuccessful(false);
         if (err === "Ошибка: 409") {
           setSubmitStatus("Пользователь с таким email уже существует.");

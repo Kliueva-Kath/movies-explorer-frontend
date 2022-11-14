@@ -27,16 +27,12 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
         .then((movies) => {
           setMovies(movies);
           localStorage.setItem("movies", JSON.stringify(movies));
-          console.log("прошел запрос фильмов к api");
-          console.log(movies, "дата с апи фильмов");
         })
         .catch((err) => {
-          console.log(err);
-          console.log("прошел неудачный запрос фильмов к api");
+          console.log(err, "при запросе фильмов с API");
         });
     }
   }, [isLoggedIn]);
-  //TODO: настроить блок .catch;
 
   useEffect(() => {
     if (localStorage.getItem("keyword")) {
@@ -50,8 +46,6 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
       setCheckboxOn(false);
       setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
     }
-
-    console.log("поиск уже имеющихся настроек для поиска");
   }, [pathname === "/movies"]);
 
   function handleSearch(value) {
@@ -140,7 +134,6 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
 
   useEffect(() => {
     countRenderedMovies(foundMovies);
-    console.log(renderedMovies);
   }, [currentWidth, foundMovies]);
 
   function handleShowMoreButtonClick() {
