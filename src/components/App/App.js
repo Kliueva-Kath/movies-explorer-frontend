@@ -139,7 +139,7 @@ function App() {
         if (err.includes("409")) {
           setSubmitStatus("Пользователь с таким email уже существует.");
         } else {
-          setSubmitStatus("При обновлении профиля произошла ошибка.");
+          setSubmitStatus("При регистрации пользователя произошла ошибка.");
         }
         setInfoTooltipOpen(true);
       });
