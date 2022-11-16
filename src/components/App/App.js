@@ -56,6 +56,7 @@ function App() {
         .getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
+          console.log(movies);
         })
         .catch((err) => {
           console.log(err, "при запросе сохраненных фильмов");

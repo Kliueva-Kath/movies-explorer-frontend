@@ -19,6 +19,7 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   }
 
   function deleteMovie(movie) {
+    console.log(movie, "фильм перед удалением");
     pathname === "/movies"
       ? onDeleteMovie(movie.id)
       : onDeleteMovie(movie.movieId);
