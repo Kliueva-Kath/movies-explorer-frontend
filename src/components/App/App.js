@@ -101,7 +101,7 @@ function App() {
         if (res.token) {
           setLoggedIn(true);
           history.push("/movies");
-          localStorage.setItem("token", res.token);
+          localStorage.setItem("loggedIn", true);
         }
       })
       .catch((err) => {
@@ -118,7 +118,7 @@ function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("loggedIn");
     if (token) {
       mainApi
         .checkToken()
@@ -131,10 +131,10 @@ function App() {
         })
         .catch((err) => {
           console.log(err, "в проверке токена");
+          handleLogout();
         });
     } else {
-      setLoggedIn(false);
-      localStorage.clear();
+      handleLogout();
     }
   }, []);
 
