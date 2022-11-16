@@ -16,7 +16,6 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
 
   function saveMovie(movie) {
     onSaveMovie(movie);
-    setSaved(true);
   }
 
   function deleteMovie(movie) {
@@ -45,7 +44,7 @@ function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
           })
         : true
     );
-  }, [pathname === "/movies", "/saved-movies"]);
+  }, [savedMovies, pathname === "/movies", "/saved-movies"]);
 
   return (
     <li className='movie'>

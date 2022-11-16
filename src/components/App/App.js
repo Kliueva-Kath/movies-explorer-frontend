@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory, Redirect } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useHistory,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
@@ -16,6 +22,7 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip.js";
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
 
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
@@ -46,6 +53,7 @@ function App() {
         .getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
+          console.log(movies);
         })
         .catch((err) => {
           console.log(err, "при запросе сохраненных фильмов");
@@ -58,11 +66,16 @@ function App() {
       .saveMovie(data)
       .then((movie) => {
         setSavedMovies([...savedMovies, movie]);
+        console.log("прошло сохранение");
       })
       .catch((err) => {
         setSubmitSuccessful(false);
-        setSubmitStatus("При сохранении фильма произошла ошибка.");
-        setInfoTooltipOpen(true);
+        if (err.includes("401")) {
+          handleLogout();
+        } else {
+          setSubmitStatus("При сохранении фильма произошла ошибка.");
+          setInfoTooltipOpen(true);
+        }
       });
   }
 
@@ -113,6 +126,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setCurrentUser(res);
+            history.replace(location);
           }
         })
         .catch((err) => {

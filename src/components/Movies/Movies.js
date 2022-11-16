@@ -50,14 +50,14 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
 
   function handleSearch(value) {
     try {
+      const serverMovies = JSON.parse(localStorage.getItem("movies"));
+
+      if (!serverMovies) {
+        getMovies();
+      }
       if (value) {
         setKeyword(value);
         localStorage.setItem("keyword", value);
-        const serverMovies = JSON.parse(localStorage.getItem("movies"));
-
-        if (!serverMovies) {
-          getMovies();
-        }
         const filteredMovies = serverMovies.filter((movie) =>
           movie.nameRU.toLowerCase().includes(value.toLowerCase())
         );
