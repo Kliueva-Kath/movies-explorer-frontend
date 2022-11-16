@@ -10,7 +10,6 @@ import Preloader from "../Preloader/Preloader.js";
 
 function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const { pathname } = useLocation();
-  const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [searchError, setSearchError] = useState("");
@@ -20,19 +19,20 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const [isShowMoreButtonActive, setShowMoreButtonActive] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      moviesApi
-        .getMovies()
-        .then((movies) => {
-          setMovies(movies);
-          localStorage.setItem("movies", JSON.stringify(movies));
-        })
-        .catch((err) => {
-          console.log(err, "при запросе фильмов с API");
-        });
-    }
-  }, [isLoggedIn]);
+  function getMovies() {
+    setLoading(true);
+    moviesApi
+      .getMovies()
+      .then((movies) => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+      })
+      .catch((err) => {
+        console.log(err, "при запросе фильмов с API");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   useEffect(() => {
     if (localStorage.getItem("keyword")) {
@@ -49,13 +49,16 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   }, [pathname === "/movies"]);
 
   function handleSearch(value) {
-    setLoading(true);
     try {
       if (value) {
         setKeyword(value);
         localStorage.setItem("keyword", value);
+        const serverMovies = JSON.parse(localStorage.getItem("movies"));
 
-        const filteredMovies = movies.filter((movie) =>
+        if (!serverMovies) {
+          getMovies();
+        }
+        const filteredMovies = serverMovies.filter((movie) =>
           movie.nameRU.toLowerCase().includes(value.toLowerCase())
         );
         localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
@@ -76,8 +79,6 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
       setSearchError(
         "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
       );
-    } finally {
-      setLoading(false);
     }
   }
 
