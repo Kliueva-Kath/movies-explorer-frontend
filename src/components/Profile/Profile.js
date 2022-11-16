@@ -1,9 +1,10 @@
+import * as EmailValidator from "email-validator";
 import { useState, useContext, useEffect } from "react";
 import "./Profile.css";
 import Header from "../Header/Header.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
-import { nameRegExp, emailRegExp } from "../../utils/constants.js";
+import { nameRegExp } from "../../utils/constants.js";
 
 function Profile({ isLoggedIn, onLogout, onSubmit }) {
   const {
@@ -82,7 +83,6 @@ function Profile({ isLoggedIn, onLogout, onSubmit }) {
               disabled={!isEditing && "disabled"}
               value={values.email || ""}
               onChange={handleChange}
-              pattern={emailRegExp}
               required
             />
           </div>
