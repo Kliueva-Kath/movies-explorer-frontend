@@ -7,6 +7,16 @@ import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 import Preloader from "../Preloader/Preloader.js";
+import {
+  SHORT_MOVIE_DURATION,
+  MOVIES_TO_RENDER_L,
+  MOVIES_TO_RENDER_M,
+  MOVIES_TO_RENDER_S,
+  MOVIES_TO_ADD_L,
+  MOVIES_TO_ADD_M_AND_S,
+  WINDOW_WIDTH_CUTOFF_L,
+  WINDOW_WIDTH_CUTOFF_M,
+} from "../../utils/constants.js";
 
 function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   const { pathname } = useLocation();
@@ -83,7 +93,7 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
     if (isCheckboxOn) {
       localStorage.setItem("isCheckboxOn", "true");
       const filteredShortMovies = filteredMovies.filter((movie) => {
-        return movie.duration <= 40;
+        return movie.duration <= SHORT_MOVIE_DURATION;
       });
       localStorage.setItem(
         "foundShortMovies",
@@ -113,12 +123,15 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   };
 
   function countRenderedMovies(foundMovies) {
-    if (currentWidth > 1210) {
-      setRenderedMovies(foundMovies.slice(0, 12));
-    } else if (currentWidth > 767 && currentWidth <= 1210) {
-      setRenderedMovies(foundMovies.slice(0, 8));
+    if (currentWidth > WINDOW_WIDTH_CUTOFF_L) {
+      setRenderedMovies(foundMovies.slice(0, MOVIES_TO_RENDER_L));
+    } else if (
+      currentWidth > WINDOW_WIDTH_CUTOFF_M &&
+      currentWidth <= WINDOW_WIDTH_CUTOFF_L
+    ) {
+      setRenderedMovies(foundMovies.slice(0, MOVIES_TO_RENDER_M));
     } else {
-      setRenderedMovies(foundMovies.slice(0, 5));
+      setRenderedMovies(foundMovies.slice(0, MOVIES_TO_RENDER_S));
     }
   }
 
@@ -135,13 +148,20 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   }, [currentWidth, foundMovies]);
 
   function handleShowMoreButtonClick() {
-    if (renderedMovies.length < foundMovies.length && currentWidth > 1210) {
-      setRenderedMovies(foundMovies.slice(0, renderedMovies.length + 3));
+    if (
+      renderedMovies.length < foundMovies.length &&
+      currentWidth > WINDOW_WIDTH_CUTOFF_L
+    ) {
+      setRenderedMovies(
+        foundMovies.slice(0, renderedMovies.length + MOVIES_TO_ADD_L)
+      );
     } else if (
       renderedMovies.length < foundMovies.length &&
-      currentWidth <= 1210
+      currentWidth <= WINDOW_WIDTH_CUTOFF_L
     ) {
-      setRenderedMovies(foundMovies.slice(0, renderedMovies.length + 2));
+      setRenderedMovies(
+        foundMovies.slice(0, renderedMovies.length + MOVIES_TO_ADD_M_AND_S)
+      );
     }
   }
 

@@ -3,7 +3,7 @@ import "./Register.css";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
-import { nameRegExp } from "../../utils/constants.js";
+import { NAME_REG_EXP } from "../../utils/constants.js";
 
 function Register({ onRegistration }) {
   const { values, handleChange, errors, isValid, resetForm } =
@@ -35,7 +35,7 @@ function Register({ onRegistration }) {
           placeholder='Имя'
           minLength='2'
           maxLength='30'
-          pattern={nameRegExp}
+          pattern={NAME_REG_EXP}
           onChange={handleChange}
           required
         />

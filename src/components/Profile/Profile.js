@@ -4,7 +4,7 @@ import "./Profile.css";
 import Header from "../Header/Header.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
-import { nameRegExp } from "../../utils/constants.js";
+import { NAME_REG_EXP } from "../../utils/constants.js";
 
 function Profile({
   isLoggedIn,
@@ -74,7 +74,7 @@ function Profile({
               value={values.name || ""}
               minLength='2'
               maxLength='30'
-              pattern={nameRegExp}
+              pattern={NAME_REG_EXP}
               required
             />
           </div>

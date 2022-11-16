@@ -5,6 +5,7 @@ import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
+import { SHORT_MOVIE_DURATION } from "../../utils/constants.js";
 
 function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
   const { pathname } = useLocation();
@@ -40,7 +41,7 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
       isCheckboxOn
         ? setFoundMovies(
             savedMovies.filter((movie) => {
-              return movie.duration <= 40;
+              return movie.duration <= SHORT_MOVIE_DURATION;
             })
           )
         : setFoundMovies(savedMovies);
@@ -50,7 +51,7 @@ function SavedMovies({ savedMovies, isLoggedIn, onDeleteMovie }) {
   function checkIfShortMovie(filteredMovies) {
     if (isCheckboxOn) {
       const filteredShortMovies = filteredMovies.filter((movie) => {
-        return movie.duration <= 40;
+        return movie.duration <= SHORT_MOVIE_DURATION;
       });
       localStorage.setItem(
         "foundSavedShortMovies",
