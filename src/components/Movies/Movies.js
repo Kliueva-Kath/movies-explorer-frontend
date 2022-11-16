@@ -28,6 +28,9 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
       })
       .catch((err) => {
         console.log(err, "при запросе фильмов с API");
+        setSearchError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -49,36 +52,30 @@ function Movies({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) {
   }, [pathname === "/movies"]);
 
   function handleSearch(value) {
-    try {
-      const serverMovies = JSON.parse(localStorage.getItem("movies"));
+    const serverMovies = JSON.parse(localStorage.getItem("movies"));
+    if (!serverMovies) {
+      getMovies();
+    }
+    if (value) {
+      setKeyword(value);
+      localStorage.setItem("keyword", value);
 
-      if (!serverMovies) {
-        getMovies();
-      }
-      if (value) {
-        setKeyword(value);
-        localStorage.setItem("keyword", value);
-        const filteredMovies = serverMovies.filter((movie) =>
-          movie.nameRU.toLowerCase().includes(value.toLowerCase())
-        );
-        localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
-        if (filteredMovies.length !== 0) {
-          setSearchError("");
-          setFoundMovies(filteredMovies);
-        } else {
-          setSearchError("Ничего не найдено");
-          setFoundMovies([]);
-        }
-        checkIfShortMovie(filteredMovies);
-
-        isCheckboxOn
-          ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
-          : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
-      }
-    } catch (err) {
-      setSearchError(
-        "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+      const filteredMovies = serverMovies.filter((movie) =>
+        movie.nameRU.toLowerCase().includes(value.toLowerCase())
       );
+      localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
+      if (filteredMovies.length !== 0) {
+        setSearchError("");
+        setFoundMovies(filteredMovies);
+      } else {
+        setSearchError("Ничего не найдено");
+        setFoundMovies([]);
+      }
+      checkIfShortMovie(filteredMovies);
+
+      isCheckboxOn
+        ? setFoundMovies(JSON.parse(localStorage.getItem("foundShortMovies")))
+        : setFoundMovies(JSON.parse(localStorage.getItem("foundMovies")));
     }
   }
 

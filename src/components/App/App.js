@@ -53,7 +53,6 @@ function App() {
         .getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
-          console.log(movies);
         })
         .catch((err) => {
           console.log(err, "при запросе сохраненных фильмов");
@@ -161,9 +160,16 @@ function App() {
   //TODO настроить блок .catch
 
   function handleLogout() {
-    localStorage.clear();
-    setLoggedIn(false);
-    history.push("/");
+    mainApi
+      .logout()
+      .then((res) => {
+        localStorage.clear();
+        setLoggedIn(false);
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err, "при выходе из профиля");
+      });
   }
 
   function handleUserUpdate(values) {
