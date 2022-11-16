@@ -28,6 +28,9 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isSubmitSuccessful, setSubmitSuccessful] = useState(true);
+  // проверка, находится ли форма в стадии выполнения запроса к api
+  const [isRequestOngoing, setRequestOngoing] = useState(false);
+  const [isProfileEditing, setProfileEditing] = useState(false);
 
   // Попапы
   const [submitStatus, setSubmitStatus] = useState("");
@@ -160,6 +163,7 @@ function App() {
   //TODO настроить блок .catch
 
   function handleLogout() {
+    console.log("logout сработал");
     mainApi
       .logout()
       .then((res) => {
@@ -173,6 +177,7 @@ function App() {
   }
 
   function handleUserUpdate(values) {
+    setRequestOngoing(true);
     mainApi
       .editUserInfo(values)
       .then((res) => {
@@ -180,6 +185,7 @@ function App() {
         setSubmitSuccessful(true);
         setSubmitStatus("Данные пользователя успешно изменены.");
         setInfoTooltipOpen(true);
+        setProfileEditing(false);
       })
       .catch((err) => {
         setSubmitSuccessful(false);
@@ -189,6 +195,9 @@ function App() {
           setSubmitStatus("При обновлении профиля произошла ошибка.");
         }
         setInfoTooltipOpen(true);
+      })
+      .finally(() => {
+        setRequestOngoing(false);
       });
   }
 
@@ -242,6 +251,9 @@ function App() {
             isLoggedIn={isLoggedIn}
             onLogout={handleLogout}
             onSubmit={handleUserUpdate}
+            isEditing={isProfileEditing}
+            setEditing={setProfileEditing}
+            isRequestOngoing={isRequestOngoing}
           />
           <Route path='*'>
             <PageNotFound />

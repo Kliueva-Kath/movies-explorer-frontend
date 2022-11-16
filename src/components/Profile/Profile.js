@@ -6,7 +6,14 @@ import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import useFormWithValidation from "../../hooks/useFormWithValidation.js";
 import { nameRegExp } from "../../utils/constants.js";
 
-function Profile({ isLoggedIn, onLogout, onSubmit }) {
+function Profile({
+  isLoggedIn,
+  onLogout,
+  onSubmit,
+  isRequestOngoing,
+  isEditing,
+  setEditing,
+}) {
   const {
     values,
     setValues,
@@ -16,7 +23,6 @@ function Profile({ isLoggedIn, onLogout, onSubmit }) {
     setValid,
     resetForm,
   } = useFormWithValidation({ name: "", email: "" });
-  const [isEditing, setEditing] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -42,8 +48,10 @@ function Profile({ isLoggedIn, onLogout, onSubmit }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(values);
-    setEditing(false);
-    resetForm({ name: currentUser.name, email: currentUser.email }, {}, true);
+    if (!isEditing) {
+      setEditing(false);
+      resetForm({ name: currentUser.name, email: currentUser.email }, {}, true);
+    }
   }
 
   return (
@@ -80,7 +88,7 @@ function Profile({ isLoggedIn, onLogout, onSubmit }) {
               type='email'
               name='email'
               placeholder='email'
-              disabled={!isEditing && "disabled"}
+              disabled={(!isEditing || isRequestOngoing) && "disabled"}
               value={values.email || ""}
               onChange={handleChange}
               required
@@ -89,10 +97,11 @@ function Profile({ isLoggedIn, onLogout, onSubmit }) {
           {isEditing && (
             <button
               className={`profile__save-button ${
-                !isValid && "profile__save-button_disabled"
+                (!isValid || isRequestOngoing) &&
+                "profile__save-button_disabled"
               }`}
               type='submit'
-              disabled={!isValid}>
+              disabled={!isValid || isRequestOngoing}>
               Сохранить
             </button>
           )}
