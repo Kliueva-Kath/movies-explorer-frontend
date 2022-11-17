@@ -1,10 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onDeleteMovie, onSaveMovie, savedMovies }) {
   const { pathname } = useLocation();
   const [isSaved, setSaved] = useState(false);
+
+  function toggleSave() {
+    if (isSaved) {
+      deleteMovie(movie);
+    } else {
+      saveMovie(movie);
+    }
+  }
+
+  function saveMovie(movie) {
+    onSaveMovie(movie);
+  }
+
+  function deleteMovie(movie) {
+    console.log(movie, "фильм перед удалением");
+    pathname === "/movies"
+      ? onDeleteMovie(movie.id)
+      : onDeleteMovie(movie.movieId);
+
+    setSaved(false);
+  }
 
   function getMovieDuration(minutes) {
     if (minutes > 60) {
@@ -16,11 +37,21 @@ function MoviesCard({ movie }) {
     }
   }
 
+  useEffect(() => {
+    setSaved(
+      pathname === "/movies"
+        ? savedMovies.some((savedMovie) => {
+            return savedMovie.movieId === movie.id;
+          })
+        : true
+    );
+  }, [savedMovies, pathname === "/movies", "/saved-movies"]);
+
   return (
     <li className='movie'>
       <div className='movie__top-panel'>
         <div className='movie__info'>
-          <h2 className='movie__name'>{movie.nameRu}</h2>
+          <h2 className='movie__name'>{movie.nameRU}</h2>
           <p className='movie__duration'>{getMovieDuration(movie.duration)}</p>
         </div>
         {pathname === "/movies" ? (
@@ -28,14 +59,30 @@ function MoviesCard({ movie }) {
             type='button'
             className={`movie__button movie__save-button ${
               isSaved && "movie__save-button_active"
-            }`}></button>
+            }`}
+            onClick={toggleSave}></button>
         ) : (
           <button
             type='button'
-            className='movie__button movie__delete-button'></button>
+            className='movie__button movie__delete-button'
+            onClick={toggleSave}></button>
         )}
       </div>
-      <img className='movie__image' src={movie.image} alt='обложка фильма' />
+      <a
+        className='movie__trailer-link'
+        href={movie.trailerLink}
+        target='_blank'
+        rel='noopener noreferrer'>
+        <img
+          className='movie__image'
+          src={
+            pathname === "/movies"
+              ? `https://api.nomoreparties.co${movie.image.url}`
+              : movie.image
+          }
+          alt={movie.nameRU}
+        />
+      </a>
     </li>
   );
 }

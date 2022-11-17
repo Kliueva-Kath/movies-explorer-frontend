@@ -3,18 +3,23 @@ import "./AuthForm.css";
 import { Link } from "react-router-dom";
 import logoPath from "../../images/Reused/logo.svg";
 
-function AuthForm({ title, children, buttonText, name }) {
+function AuthForm({ title, children, buttonText, name, onSubmit, isValid }) {
   return (
     <div className='auth-form'>
       <Link to='/' className='auth-form__logo-link'>
         <img className='auth-form__logo' src={logoPath} alt='логотип' />
       </Link>
       <h2 className='auth-form__header'>{title}</h2>
-      <form className={`auth-form__form auth-form__form_type_${name}`}>
+      <form
+        className={`auth-form__form auth-form__form_type_${name}`}
+        onSubmit={onSubmit}>
         {children}
         <button
           type='submit'
-          className={`auth-form__button auth-form__button_type_${name}`}>
+          className={`auth-form__button auth-form__button_type_${name} ${
+            !isValid && "auth-form__button_disabled"
+          }`}
+          disabled={!isValid}>
           {buttonText}
         </button>
       </form>

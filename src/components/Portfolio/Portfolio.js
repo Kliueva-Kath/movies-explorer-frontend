@@ -38,7 +38,7 @@ function Portfolio() {
         <li className='portfolio__item'>
           <a
             className='portfolio__link'
-            href='https://mesto.kliueva.nomoredomains.club/sign-in'
+            href='https://mesto.kliueva.nomoredomains.club'
             target='_blank'
             rel='noopener noreferrer'>
             Одностраничное приложение

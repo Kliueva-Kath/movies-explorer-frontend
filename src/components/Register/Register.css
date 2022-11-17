@@ -27,10 +27,10 @@
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
-  line-height: 12px;
+  line-height: 1.2;
   color: #ee3465;
   padding: 6px 0;
-  visibility: hidden;
+  min-height: 12px;
 }
 
 .auth-form__input_error {
@@ -40,10 +40,6 @@
 .auth-form__input:focus {
   outline: none;
   border-bottom: 1px solid #4285f4;
-}
-
-.auth-form__input-error_visible {
-  visibility: visible;
 }
 
 .auth-form__redirect {

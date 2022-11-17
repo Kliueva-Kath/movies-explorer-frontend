@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: relative;
 }
 
 .auth-form__logo-link:hover {
@@ -48,12 +49,22 @@
   color: #ffffff;
 }
 
+.auth-form__button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 .auth-form__button_type_register {
   margin: 128px auto 16px;
 }
 
 .auth-form__button_type_login {
   margin: 197px auto 16px;
+}
+
+.auth-form__button_disabled {
+  background: #f8f8f8;
+  color: #000000;
 }
 
 @media screen and (max-width: 800px) {
